@@ -58,6 +58,7 @@ export declare enum MarkupHierarchicalType {
     OperatorOption = "operatorOption",
     Argument = "argument"
 }
+export declare type ScriptCacheRef = CacheRef;
 export declare type MarkupOption = {
     hierarchicalType: MarkupHierarchicalType.OperatorOption;
     label: string;
@@ -96,12 +97,13 @@ export declare enum MarkupType {
 export declare type MarkupOperator = MarkupSelect;
 export declare type MarkupArgument = MarkupSelect | MarkupInput;
 export declare type MarkupSource = {
+    kind: string;
     url: string;
     script: MarkupScript;
 };
 export declare type MarkupScript = Array<MarkupOperator>;
 export declare type MarkupRequest = {
-    notBefore: number;
+    timelock: number;
     retrieve: Array<MarkupSource>;
     aggregate: MarkupScript;
     tally: MarkupScript;
@@ -200,9 +202,10 @@ export declare type MirScript = Array<MirOperator>;
 export declare type MirSource = {
     url: string;
     script: MirScript;
+    kind: string;
 };
 export declare type MirRequest = {
-    notBefore: number;
+    timelock: number;
     retrieve: Array<MirSource>;
     aggregate: MirScript;
     tally: MirScript;
@@ -373,14 +376,15 @@ export declare type CachedMarkupSelect = {
 export declare type CachedMarkupOperator = CachedMarkupSelect;
 export declare type CachedMarkupScript = Array<CacheRef>;
 export declare type CachedMarkupRequest = {
-    notBefore: number;
+    timelock: number;
     retrieve: Array<CachedMarkupSource>;
-    aggregate: CachedMarkupScript;
-    tally: CachedMarkupScript;
+    aggregate: ScriptCacheRef;
+    tally: ScriptCacheRef;
 };
 export declare type CachedMarkupSource = {
+    kind: string;
     url: string;
-    script: CachedMarkupScript;
+    script: ScriptCacheRef;
 };
 export declare type CachedMarkup = {
     name: string;

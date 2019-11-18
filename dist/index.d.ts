@@ -1,7 +1,7 @@
 import { markup2mir } from './markup2mir';
 import { Radon } from './radon';
 import { mir2markup } from './mir2markup';
-export { markup2mir };
+export { Radon, markup2mir, mir2markup };
 declare const _default: {
     Radon: typeof Radon;
     markup2mir: typeof markup2mir;

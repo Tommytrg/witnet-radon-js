@@ -35,7 +35,7 @@ export function mir2markup(mir: Mir): Markup {
   const aggregateScript: MarkupScript = generateMarkupScript(mir.radRequest.aggregate, cache).script
   const tallyScript: MarkupScript = generateMarkupScript(mir.radRequest.tally, cache).script
   const radRequest: MarkupRequest = {
-    notBefore: mir.radRequest.notBefore,
+    timelock: mir.radRequest.timelock,
     retrieve: mir.radRequest.retrieve.map((source: MirSource) => {
       let generatedMarkupScript: GeneratedMarkupScript = generateMarkupScript(source.script, cache)
       return {

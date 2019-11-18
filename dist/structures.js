@@ -2,7 +2,6 @@
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 Object.defineProperty(exports, "__esModule", { value: true });
 var types_1 = require("./types");
-var utils_1 = require("./utils");
 exports.typeSystem = (_a = {},
     _a[types_1.Type.Boolean] = (_b = {},
         _b[types_1.BooleanOperatorName.AsString] = [types_1.OperatorCode.BooleanAsString, [types_1.OutputType.String]],
@@ -598,15 +597,21 @@ exports.operatorInfos = (_k = {},
     _k);
 var Cache = /** @class */ (function () {
     function Cache() {
+        this.counter = 0;
         this.cache = {};
     }
+    Cache.prototype.getLastIndex = function () {
+        return this.counter + 1;
+    };
     Cache.prototype.get = function (cacheId) {
         return this.cache[cacheId];
     };
-    Cache.prototype.set = function (item) {
-        var id = utils_1.dummyHash(JSON.stringify(item));
+    Cache.prototype.insert = function (item) {
+        this.cache[++this.counter] = item;
+        return { id: this.counter };
+    };
+    Cache.prototype.set = function (id, item) {
         this.cache[id] = item;
-        return { id: id };
     };
     return Cache;
 }());

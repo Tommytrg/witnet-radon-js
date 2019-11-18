@@ -38,7 +38,7 @@ export function markup2mir(markup: Markup): Mir {
   const tally: MirScript = generateMirScript(markup.radRequest.tally)
 
   const radRequest: MirRequest = {
-    notBefore: markup.radRequest.notBefore,
+    timelock: markup.radRequest.timelock,
     retrieve,
     aggregate,
     tally,
@@ -57,6 +57,7 @@ export function generateMirSources(markupSources: Array<MarkupSource>): Array<Mi
     return {
       script: generateMirScript(source.script),
       url: source.url,
+      kind: source.kind,
     } as MirSource
   })
 
@@ -151,6 +152,7 @@ export function findOperatorCode(name: OperatorName, optionNames: Array<string>)
     const operatorCode: OperatorCode = typeSystem[Type.Float][name as FloatOperatorName][0]
     return operatorCode
   } else if (areSoftEqualArrays(optionNames, getEnumValues(StringOperatorName))) {
+
     const operatorCode: OperatorCode = typeSystem[Type.String][name as StringOperatorName][0]
     return operatorCode
   } else if (areSoftEqualArrays(optionNames, getEnumValues(ArrayOperatorName))) {

@@ -8,7 +8,7 @@ function markup2mir(markup) {
     var aggregate = generateMirScript(markup.radRequest.aggregate);
     var tally = generateMirScript(markup.radRequest.tally);
     var radRequest = {
-        notBefore: markup.radRequest.notBefore,
+        timelock: markup.radRequest.timelock,
         retrieve: retrieve,
         aggregate: aggregate,
         tally: tally,
@@ -26,6 +26,7 @@ function generateMirSources(markupSources) {
         return {
             script: generateMirScript(source.script),
             url: source.url,
+            kind: source.kind,
         };
     });
     return mirSources;

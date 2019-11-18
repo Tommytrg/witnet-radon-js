@@ -8,7 +8,7 @@ function mir2markup(mir) {
     var aggregateScript = generateMarkupScript(mir.radRequest.aggregate, cache).script;
     var tallyScript = generateMarkupScript(mir.radRequest.tally, cache).script;
     var radRequest = {
-        notBefore: mir.radRequest.notBefore,
+        timelock: mir.radRequest.timelock,
         retrieve: mir.radRequest.retrieve.map(function (source) {
             var generatedMarkupScript = generateMarkupScript(source.script, cache);
             return {

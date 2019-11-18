@@ -1292,9 +1292,10 @@ describe('mir2markup', () => {
       name: 'bitcoin',
       description: 'Request the bitcoin price from coindesk, blockchain.info, bitstamp',
       radRequest: {
-        notBefore: 1669852800,
+        timelock: 1669852800,
         retrieve: [
           {
+            kind: '',
             url: 'https://api.coindesk.com/v1/bpi/currentprice.json',
             script: [69, 116, [97, 'bpi'], 116, [97, 'VSD'], 116, [97, 'rate_float'], 114],
           },
@@ -1308,7 +1309,7 @@ describe('mir2markup', () => {
       name: 'bitcoin',
       description: 'Request the bitcoin price from coindesk, blockchain.info, bitstamp',
       radRequest: {
-        notBefore: 1669852800,
+        timelock: 1669852800,
         retrieve: [
           {
             url: 'https://api.coindesk.com/v1/bpi/currentprice.json',

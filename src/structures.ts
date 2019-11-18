@@ -15,7 +15,6 @@ import {
   MirArgumentKind,
   CacheRef,
 } from './types'
-import { dummyHash } from './utils'
 
 export const typeSystem: TypeSystem = {
   [Type.Boolean]: {
@@ -616,21 +615,30 @@ export const operatorInfos: OperatorInfos = {
 }
 
 export class Cache<T> {
+  private counter: number = 0
+
   private cache: {
-    [key: string]: T
+    [key: number]: T
   }
 
   constructor() {
     this.cache = {}
   }
 
+  getLastIndex() {
+    return this.counter + 1
+  }
+
   get(cacheId: number): T {
     return this.cache[cacheId]
   }
 
-  set(item: T): CacheRef {
-    const id = dummyHash(JSON.stringify(item))
+  insert(item: T): CacheRef {
+    this.cache[++this.counter] = item
+    return { id: this.counter }
+  }
+
+  set(id: number, item: T) {
     this.cache[id] = item
-    return { id }
   }
 }
