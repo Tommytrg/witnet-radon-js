@@ -81,7 +81,7 @@ export class Radon {
    * Public class methods
    */
 
-  // convert a mir request into a cached markup request
+  // Convert a mir request into a cached markup request
   public mir2markup(mir: Mir): CachedMarkup {
     const aggregateScript: ScriptCacheRef = this.saveScriptInCache(
       this.generateMarkupScript(mir.radRequest.aggregate, this.scriptCache.getLastIndex())
@@ -113,12 +113,12 @@ export class Radon {
     return this.cachedMarkup
   }
 
-  // get the mir request from the internal cached markup
+  // Get the mir request from the internal cached markup
   public getMir() {
     return markup2mir(this.getMarkup())
   }
 
-  // generate a radon markup from the internal cached markup
+  // Generate a radon markup from the internal cached markup
   public getMarkup(): Markup {
     const cachedRadRequest = this.cachedMarkup.radRequest
 
@@ -138,7 +138,7 @@ export class Radon {
     }
   }
 
-  // push a new retrieval source
+  // Push a new retrieval source
   public addSource() {
     const scriptIndex = this.scriptCache.getLastIndex()
     const scripCachetRef = this.saveScriptInCache(this.generateMarkupScript([0x75], scriptIndex))
@@ -149,7 +149,7 @@ export class Radon {
     } as CachedMarkupSource)
   }
 
-  // push a new operator in a script
+  // Push a new operator in a script
   public addOperator(scriptId: number) {
     const cacheByScriptId = this.scriptCache.get(scriptId)
     const lastOperatorRef = cacheByScriptId[cacheByScriptId.length - 1]
@@ -183,8 +183,8 @@ export class Radon {
     } else if (outputType === OutputType.Passthrough) {
       mirOperator = 0x70
     }
-    //TODO: move this Cache logic to its own Cache method
-    //generate markup operator with operator
+    // TODO: move this Cache logic to its own Cache method
+    // Generate markup operator with operator
     const cachedMarkupOperator = this.generateMarkupOperator(mirOperator, scriptId)
     const operatorRef = this.wrapResultInCache(cachedMarkupOperator)
     const newCacheScript = this.scriptCache.get(scriptId)
@@ -192,25 +192,25 @@ export class Radon {
     this.scriptCache.set(scriptId, newCacheScript)
   }
 
-  // delete a retrieval source
+  // Delete a retrieval source
   public deleteSource(index: number) {
     if (this.cachedMarkup.radRequest.retrieve[index]) {
       this.cachedMarkup.radRequest.retrieve.splice(index, 1)
     }
   }
 
-  // update the url of a source
+  // Update the url of a source
   public updateSource(url: string, index: number) {
     this.cachedMarkup.radRequest.retrieve[index].url = url
   }
 
-  // update the markup request with the given value
+  // Update the markup request with the given value
   public updateMarkup(id: number, value: number | string | boolean): Markup {
     const cachedItem = this.unwrapResultFromCache({ id })
     if (cachedItem.markupType === MarkupType.Input) {
       this.updateMarkupInput(id, cachedItem, value)
     } else {
-      //TODO: remove casting. We sshould store only select instead of select|selected
+      // TODO: remove casting. We sshould store only select instead of select|selected
       this.updateMarkupSelect(id, cachedItem as CachedMarkupSelect, value as OperatorName)
     }
     return this.getMarkup()
@@ -222,14 +222,14 @@ export class Radon {
 
   // TODO: convert these methods into a private ones
 
-  // update a markup input with the given value
+  // Update a markup input with the given value
   public updateMarkupInput(id: number, cachedInput: MarkupInput, value: number | string | boolean) {
     const newCacheInput: MarkupInput = { ...cachedInput, value }
     this.updateCacheItem(id, newCacheInput)
   }
 
-  // TODO: split in two functions
-  // update a markup select with the given value and remove operators to continue being valid
+  // TODO: Split in two functions
+  // Update a markup select with the given value and remove operators to continue being valid
   public updateMarkupSelect(
     id: number,
     cachedSelect: CachedMarkupSelect,
@@ -285,14 +285,14 @@ export class Radon {
   }
 
   // TODO: cache scriptCache
-  // remove from a script the operators that are after the desired one
+  // Remove from a script the operators that are after the desired one
   public removeNextOperators(scriptId: number, idToRemove: number) {
     const index = this.scriptCache.get(scriptId).findIndex(x => x === idToRemove)
     const newScript = this.scriptCache.get(scriptId).slice(0, index + 1)
     this.scriptCache.set(scriptId, newScript)
   }
 
-  // create a cached markup script
+  // Create a cached markup script
   public generateMarkupScript(script: MirScript, scriptId: number): CachedMarkupScript {
     const markupScript: CachedMarkupScript = script.map((operator: MirOperator) => {
       return this.wrapResultInCache(this.generateMarkupOperator(operator, scriptId))
@@ -301,7 +301,7 @@ export class Radon {
     return markupScript
   }
 
-  // creates a cached markup operator
+  // Create a cached markup operator
   public generateMarkupOperator(operator: MirOperator, scriptId: number): CachedMarkupOperator {
     const { code, args } = this.getMirOperatorInfo(operator)
     const operatorInfo: OperatorInfo = operatorInfos[code]
@@ -322,7 +322,7 @@ export class Radon {
     return markupOperator
   }
 
-  // create a cached markup selected option
+  // Create a cached markup selected option
   public generateSelectedOption(
     operatorInfo: OperatorInfo,
     code: OperatorCode,
@@ -343,7 +343,7 @@ export class Radon {
     return markupSelectedOption
   }
 
-  // create and save in cache a list of markup operator arguments
+  // Create and save in cache a list of markup operator arguments
   public generateOperatorArguments(
     operatorInfo: OperatorInfo,
     args: Array<MirArgument>,
@@ -380,7 +380,7 @@ export class Radon {
     return operatorArguments
   }
 
-  // create a markup input argument
+  // Create a markup input argument
   public generateInputArgument(value: string | number | boolean, label: string): MarkupInput {
     return {
       hierarchicalType: MarkupHierarchicalType.Argument,
@@ -391,7 +391,7 @@ export class Radon {
     } as MarkupInput
   }
 
-  // create a cached markup filter argument
+  // Create a cached markup filter argument
   public generateFilterArgument(
     label: string,
     filter: FilterArgument,
@@ -426,7 +426,7 @@ export class Radon {
     } as CachedMarkupSelect
   }
 
-  // create a cached markup selected filter argument
+  // Create a cached markup selected filter argument
   public generateSelectedFilterArgument(
     filterArgument: FilterArgument
   ): CachedMarkupSelectedOption {
@@ -541,7 +541,7 @@ export class Radon {
   // Insert a new item in the cache in the given id
   public updateCacheItem(id: number, item: CachedMarkupSelectedOption | CachedArgument) {
     return this.cache.set(id, item)
-  }
+  }  
 
   // Store a new item in the cache
   public wrapResultInCache(result: CachedMarkupSelectedOption | CachedArgument) {
@@ -650,6 +650,7 @@ function generateReducerArgumentOptions(): Array<MarkupOption> {
   })
   return markupOptions
 }
+
 // Get a mir argument from argument information
 function getDefaultMirArgument(argumentInfo: ArgumentInfo): MirArgument {
   const argumentType = argumentInfo.type
