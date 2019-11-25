@@ -152,7 +152,6 @@ export function findOperatorCode(name: OperatorName, optionNames: Array<string>)
     const operatorCode: OperatorCode = typeSystem[Type.Float][name as FloatOperatorName][0]
     return operatorCode
   } else if (areSoftEqualArrays(optionNames, getEnumValues(StringOperatorName))) {
-
     const operatorCode: OperatorCode = typeSystem[Type.String][name as StringOperatorName][0]
     return operatorCode
   } else if (areSoftEqualArrays(optionNames, getEnumValues(ArrayOperatorName))) {
