@@ -77,7 +77,6 @@ export class Radon {
     this.cachedMarkup = mir ? this.mir2markup(mir) : defaultRequest
   }
 
-
   /**
    * Public class methods
    */
@@ -221,7 +220,7 @@ export class Radon {
    * Private methods
    */
 
-  // TODO: convert these methods into a private ones 
+  // TODO: convert these methods into a private ones
 
   // update a markup input with the given value
   public updateMarkupInput(id: number, cachedInput: MarkupInput, value: number | string | boolean) {
@@ -286,7 +285,7 @@ export class Radon {
   }
 
   // TODO: cache scriptCache
-  // remove from a script the operators that are after the desired one 
+  // remove from a script the operators that are after the desired one
   public removeNextOperators(scriptId: number, idToRemove: number) {
     const index = this.scriptCache.get(scriptId).findIndex(x => x === idToRemove)
     const newScript = this.scriptCache.get(scriptId).slice(0, index + 1)
@@ -323,7 +322,7 @@ export class Radon {
     return markupOperator
   }
 
-  // create a cached markup selected option 
+  // create a cached markup selected option
   public generateSelectedOption(
     operatorInfo: OperatorInfo,
     code: OperatorCode,
@@ -483,7 +482,7 @@ export class Radon {
   }
 
   // Read a selected option from the cache and replace its cache references creating a markup selected option
-   public unwrapSelectedOption(selectedOption: CacheRef): MarkupSelectedOption {
+  public unwrapSelectedOption(selectedOption: CacheRef): MarkupSelectedOption {
     const cachedSelectedOption: CachedMarkupSelectedOption = this.unwrapResultFromCache(
       selectedOption
     ) as CachedMarkupSelectedOption
@@ -561,8 +560,8 @@ export class Radon {
   /**
    * Utility functions
    */
-  
-   // TOD0: Move this methods out of the class
+
+  // TOD0: Move this methods out of the class
 
   // Find the output type of an operator code
   public findOutputType(code: OperatorCode): OutputType | Array<OutputType> {
@@ -623,7 +622,6 @@ export class Radon {
     }
     return selectedArgument
   }
-
 }
 
 // Generate a list of markup filter argument options
