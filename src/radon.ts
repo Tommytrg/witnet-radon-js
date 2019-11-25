@@ -77,37 +77,11 @@ export class Radon {
     this.cachedMarkup = mir ? this.mir2markup(mir) : defaultRequest
   }
 
-  /**
-   * Wrapper methods to interact with the cache
-   */
-
-  // Store all the script operators in the script cache
-  public saveScriptInCache(script: CachedMarkupScript): ScriptCacheRef {
-    return this.scriptCache.insert(script.map(x => x.id))
-  }
-
-  // Insert a new item in the cache in the given id
-  public updateCacheItem(id: number, item: CachedMarkupSelectedOption | CachedArgument) {
-    return this.cache.set(id, item)
-  }
-
-  // Store a new item in the cache
-  public wrapResultInCache(result: CachedMarkupSelectedOption | CachedArgument) {
-    return this.cache.insert(result)
-  }
-
-  // Get the cache item of the given reference
-  public unwrapResultFromCache(ref: CacheRef) {
-    return this.cache.get(ref.id)
-  }
-
-  public readScriptCache(id: number) {
-    return this.scriptCache.get(id)
-  }
 
   /**
    * Public class methods
    */
+
   // convert a mir request into a cached markup request
   public mir2markup(mir: Mir): CachedMarkup {
     const aggregateScript: ScriptCacheRef = this.saveScriptInCache(
@@ -246,6 +220,8 @@ export class Radon {
   /**
    * Private methods
    */
+
+  // TODO: convert these methods into a private ones 
 
   // update a markup input with the given value
   public updateMarkupInput(id: number, cachedInput: MarkupInput, value: number | string | boolean) {
@@ -555,9 +531,39 @@ export class Radon {
   }
 
   /**
-   * Utility functions
-   * TOD0: Move this methods to utils file
+   * Wrapper methods to interact with the cache
    */
+
+  // Store all the script operators in the script cache
+  public saveScriptInCache(script: CachedMarkupScript): ScriptCacheRef {
+    return this.scriptCache.insert(script.map(x => x.id))
+  }
+
+  // Insert a new item in the cache in the given id
+  public updateCacheItem(id: number, item: CachedMarkupSelectedOption | CachedArgument) {
+    return this.cache.set(id, item)
+  }
+
+  // Store a new item in the cache
+  public wrapResultInCache(result: CachedMarkupSelectedOption | CachedArgument) {
+    return this.cache.insert(result)
+  }
+
+  // Get the cache item of the given reference
+  public unwrapResultFromCache(ref: CacheRef) {
+    return this.cache.get(ref.id)
+  }
+
+  public readScriptCache(id: number) {
+    return this.scriptCache.get(id)
+  }
+
+  /**
+   * Utility functions
+   */
+  
+   // TOD0: Move this methods out of the class
+
   // Find the output type of an operator code
   public findOutputType(code: OperatorCode): OutputType | Array<OutputType> {
     const entry: TypeSystemEntry = Object.entries(typeSystem).find(entry => {
