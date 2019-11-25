@@ -444,13 +444,10 @@ export class Radon {
 
   // Replace cache references of the given source creating a markup source
   public unwrapSource(source: CachedMarkupSource): MarkupSource {
-    const markupSource: MarkupSource = {
-      kind: source.kind,
-      url: source.url,
+    return {
+      ...source,
       script: this.unwrapScript(this.readScriptCache(source.script.id).map(id => ({ id }))),
     }
-
-    return markupSource
   }
 
   // Replace cache references of the given script creating a markup script
@@ -468,17 +465,11 @@ export class Radon {
 
   // Replace cache references of the given operator creating a markup operator
   public unwrapOperator(operator: CachedMarkupOperator, id: number): MarkupOperator {
-    const markup: MarkupOperator = {
-      hierarchicalType: operator.hierarchicalType,
-      id: id,
-      label: operator.label,
-      markupType: operator.markupType,
-      options: operator.options,
-      outputType: operator.outputType,
-      scriptId: operator.scriptId,
+    return {
+      ...operator,
+      id,
       selected: this.unwrapSelectedOption(operator.selected),
     }
-    return markup
   }
 
   // Read a selected option from the cache and replace its cache references creating a markup selected option
@@ -488,15 +479,12 @@ export class Radon {
     ) as CachedMarkupSelectedOption
 
     const markup: MarkupSelectedOption = {
+      ...cachedSelectedOption,
       arguments: cachedSelectedOption.arguments.length
         ? (cachedSelectedOption.arguments as Array<CacheRef>).map((argument: CacheRef) => {
             return this.unwrapArgument(argument)
           })
         : [],
-      hierarchicalType: cachedSelectedOption.hierarchicalType,
-      label: cachedSelectedOption.label,
-      markupType: cachedSelectedOption.markupType,
-      outputType: cachedSelectedOption.outputType,
     }
 
     return markup
@@ -550,7 +538,7 @@ export class Radon {
   // Insert a new item in the cache in the given id
   public updateCache(id: number, item: CachedMarkupSelectedOption | CachedArgument) {
     return this.cache.set(id, item)
-  }  
+  } 
 
   // Store a new item in the cache
   public writeCache(result: CachedMarkupSelectedOption | CachedArgument) {
