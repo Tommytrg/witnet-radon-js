@@ -51,9 +51,9 @@ export enum OutputType {
   Map = 'map',
   Bytes = 'bytes',
   Result = 'result',
+  SubscriptOutput = 'subscriptOutput',
   Inner = 'inner',
-  Argument = 'argument',
-  Passthrough = 'passthrough',
+  Same = 'same',
 }
 
 export enum MarkupHierarchicalType {

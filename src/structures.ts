@@ -105,7 +105,200 @@ export const typeSystem: TypeSystem = {
 }
 
 export const operatorInfos: OperatorInfos = {
-  [0x10]: {
+  [16]: {
+    type: Type.Array,
+    name: 'count',
+    arguments: [],
+  },
+  [17]: {
+    type: Type.Array,
+    name: 'filter',
+    arguments: [
+      {
+        name: 'function',
+        optional: false,
+        type: MirArgumentKind.Filter,
+      },
+    ],
+  },
+  [18]: {
+    type: Type.Array,
+    name: 'flatten',
+    arguments: [
+      {
+        name: 'depth',
+        optional: true,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [19]: {
+    type: Type.Array,
+    name: 'get_array',
+    outputType: Type.Array,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [20]: {
+    type: Type.Array,
+    name: 'get_boolean',
+    outputType: Type.Boolean,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [21]: {
+    type: Type.Array,
+    name: 'get_bytes',
+    outputType: Type.Bytes,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [22]: {
+    type: Type.Array,
+    name: 'get_integer',
+    outputType: Type.Integer,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [23]: {
+    type: Type.Array,
+    name: 'get_float',
+    outputType: Type.Boolean,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [24]: {
+    type: Type.Array,
+    name: 'get_map',
+    outputType: Type.Map,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [25]: {
+    type: Type.Array,
+    name: 'get_result',
+    outputType: Type.Result,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [26]: {
+    type: Type.Array,
+    name: 'get_string',
+    outputType: Type.String,
+    arguments: [
+      {
+        name: 'index',
+        optional: false,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [27]: {
+    type: Type.Array,
+    name: 'map',
+    outputType: OutputType.SubscriptOutput,
+    arguments: [
+      {
+        name: 'operator',
+        optional: false,
+        type: MirArgumentKind.Mapper,
+      },
+    ],
+  },
+  [28]: {
+    type: Type.Array,
+    name: 'reduce',
+    outputType: OutputType.Inner,
+    arguments: [
+      {
+        name: 'function',
+        optional: false,
+        type: MirArgumentKind.Reducer,
+      },
+    ],
+  },
+  [29]: {
+    type: Type.Array,
+    name: 'some',
+    outputType: OutputType.Boolean,
+    arguments: [
+      {
+        name: 'function',
+        optional: false,
+        type: MirArgumentKind.Filter,
+      },
+    ],
+  },
+  [30]: {
+    type: Type.Array,
+    name: 'sort',
+    outputType: OutputType.Same,
+    arguments: [
+      {
+        name: 'mapFunction',
+        optional: false,
+        type: MirArgumentKind.Mapper,
+      },
+      {
+        name: 'ascending',
+        optional: false,
+        type: MirArgumentKind.Boolean,
+      },
+    ],
+  },
+  [31]: {
+    type: Type.Array,
+    name: 'take',
+    outputType: OutputType.Same,
+    arguments: [
+      {
+        name: 'min',
+        optional: true,
+        type: MirArgumentKind.Integer,
+      },
+      {
+        name: 'max',
+        optional: true,
+        type: MirArgumentKind.Integer,
+      },
+    ],
+  },
+  [32]: {
     type: Type.Boolean,
     name: 'match',
     arguments: [
@@ -121,32 +314,32 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x11]: {
+  [33]: {
     type: Type.Boolean,
     name: 'negate',
     arguments: [],
   },
-  [0x12]: {
-    type: Type.Boolean,
+  [48]: {
+    type: Type.Bytes,
     name: 'asString',
     arguments: [],
   },
-  [0x20]: {
+  [49]: {
+    type: Type.Bytes,
+    name: 'hash',
+    arguments: [],
+  },
+  [64]: {
     type: Type.Integer,
     name: 'absolute',
     arguments: [],
   },
-  [0x21]: {
-    type: Type.Integer,
-    name: 'asBytes',
-    arguments: [],
-  },
-  [0x22]: {
+  [65]: {
     type: Type.Integer,
     name: 'asFloat',
     arguments: [],
   },
-  [0x23]: {
+  [66]: {
     type: Type.Integer,
     name: 'asString',
     arguments: [
@@ -157,7 +350,7 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x24]: {
+  [67]: {
     type: Type.Integer,
     name: 'greaterThan',
     arguments: [
@@ -168,7 +361,7 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x25]: {
+  [68]: {
     type: Type.Integer,
     name: 'lessThan',
     arguments: [
@@ -179,12 +372,12 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x26]: {
+  [69]: {
     type: Type.Integer,
     name: 'match',
     arguments: [],
   },
-  [0x27]: {
+  [70]: {
     type: Type.Integer,
     name: 'modulo',
     arguments: [
@@ -195,7 +388,7 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x28]: {
+  [71]: {
     type: Type.Integer,
     name: 'multiply',
     arguments: [
@@ -206,12 +399,12 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x29]: {
+  [72]: {
     type: Type.Integer,
     name: 'negate',
     arguments: [],
   },
-  [0x2a]: {
+  [73]: {
     type: Type.Integer,
     name: 'power',
     arguments: [
@@ -222,12 +415,12 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x2b]: {
+  [74]: {
     type: Type.Integer,
     name: 'reciprocal',
     arguments: [],
   },
-  [0x2c]: {
+  [75]: {
     type: Type.Integer,
     name: 'sum',
     arguments: [
@@ -238,17 +431,12 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x30]: {
+  [80]: {
     type: Type.Float,
     name: 'absolute',
     arguments: [],
   },
-  [0x31]: {
-    type: Type.Float,
-    name: 'asBytes',
-    arguments: [],
-  },
-  [0x32]: {
+  [81]: {
     type: Type.Float,
     name: 'asString',
     arguments: [
@@ -259,12 +447,12 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x33]: {
+  [82]: {
     type: Type.Float,
     name: 'ceiling',
     arguments: [],
   },
-  [0x34]: {
+  [83]: {
     type: Type.Float,
     name: 'greaterThan',
     arguments: [
@@ -275,12 +463,12 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x35]: {
+  [84]: {
     type: Type.Float,
     name: 'floor',
     arguments: [],
   },
-  [0x36]: {
+  [85]: {
     type: Type.Float,
     name: 'lessThan',
     arguments: [
@@ -291,7 +479,7 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x37]: {
+  [86]: {
     type: Type.Float,
     name: 'modulo',
     arguments: [
@@ -302,7 +490,7 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x38]: {
+  [87]: {
     type: Type.Float,
     name: 'multiply',
     arguments: [
@@ -313,12 +501,12 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x39]: {
+  [88]: {
     type: Type.Float,
     name: 'negate',
     arguments: [],
   },
-  [0x3a]: {
+  [89]: {
     type: Type.Float,
     name: 'power',
     arguments: [
@@ -329,17 +517,17 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x3b]: {
+  [90]: {
     type: Type.Float,
     name: 'reciprocal',
     arguments: [],
   },
-  [0x3c]: {
+  [91]: {
     type: Type.Float,
     name: 'round',
     arguments: [],
   },
-  [0x3d]: {
+  [92]: {
     type: Type.Float,
     name: 'sum',
     arguments: [
@@ -350,9 +538,164 @@ export const operatorInfos: OperatorInfos = {
       },
     ],
   },
-  [0x3e]: {
+  [93]: {
     type: Type.Float,
     name: 'truncate',
+    arguments: [],
+  },
+  [96]: {
+    type: Type.Map,
+    name: 'entries',
+    arguments: [],
+  },
+  [97]: {
+    type: Type.Map,
+    name: 'get_array',
+    arguments: [
+      {
+        name: 'key',
+        optional: false,
+        type: MirArgumentKind.String,
+      },
+    ],
+  },
+  [98]: {
+    type: Type.Map,
+    name: 'get_boolean',
+    arguments: [
+      {
+        name: 'key',
+        optional: false,
+        type: MirArgumentKind.String,
+      },
+    ],
+  },
+  [99]: {
+    type: Type.Map,
+    name: 'get_bytes',
+    arguments: [
+      {
+        name: 'key',
+        optional: false,
+        type: MirArgumentKind.String,
+      },
+    ],
+  },
+  [100]: {
+    type: Type.Map,
+    name: 'get_integer',
+    arguments: [
+      {
+        name: 'key',
+        optional: false,
+        type: MirArgumentKind.String,
+      },
+    ],
+  },
+  [101]: {
+    type: Type.Map,
+    name: 'get_float',
+    arguments: [
+      {
+        name: 'key',
+        optional: false,
+        type: MirArgumentKind.String,
+      },
+    ],
+  },
+  [102]: {
+    type: Type.Map,
+    name: 'get_map',
+    arguments: [
+      {
+        name: 'key',
+        optional: false,
+        type: MirArgumentKind.String,
+      },
+    ],
+  },
+  [103]: {
+    type: Type.Map,
+    name: 'get_string',
+    arguments: [
+      {
+        name: 'key',
+        optional: false,
+        type: MirArgumentKind.String,
+      },
+    ],
+  },
+  [104]: {
+    type: Type.Map,
+    name: 'keys',
+    arguments: [],
+  },
+  [105]: {
+    type: Type.Map,
+    name: 'values_array',
+    arguments: [],
+  },
+  [106]: {
+    type: Type.Map,
+    name: 'values_boolean',
+    arguments: [],
+  },
+  [107]: {
+    type: Type.Map,
+    name: 'values_bytes',
+    arguments: [],
+  },
+  [108]: {
+    type: Type.Map,
+    name: 'values_integer',
+    arguments: [],
+  },
+  [109]: {
+    type: Type.Map,
+    name: 'values_float',
+    arguments: [],
+  },
+  [110]: {
+    type: Type.Map,
+    name: 'values_map',
+    arguments: [],
+  },
+  [111]: {
+    type: Type.Map,
+    name: 'values_string',
+    arguments: [],
+  },
+
+
+  [112]: {
+    type: Type.Result,
+    name: 'get',
+    arguments: [],
+  },
+  [113]: {
+    type: Type.Result,
+    name: 'getOr',
+    arguments: [
+      {
+        name: 'default',
+        optional: false,
+        type: MirArgumentKind.Inner,
+      },
+    ],
+  },
+  [114]: {
+    type: Type.Result,
+    name: 'isOk',
+    arguments: [],
+  },
+
+
+
+
+
+  [0x47]: {
+    type: Type.String,
+    name: 'asBoolean',
     arguments: [],
   },
   [0x40]: {
@@ -379,20 +722,40 @@ export const operatorInfos: OperatorInfos = {
     type: Type.String,
     name: 'match',
     arguments: [],
+ 
+  [0x45]: {
+    type: Type.String,
+    name: 'parseJson_array',
+    arguments: [],
   },
   [0x45]: {
     type: Type.String,
-    name: 'parseJson',
+    name: 'parseJson_boolean',
+    arguments: [],
+  },
+  [0x45]: {
+    type: Type.String,
+    name: 'parseJson_integer',
+    arguments: [],
+  },
+  [0x45]: {
+    type: Type.String,
+    name: 'parseJson_float',
+    arguments: [],
+  },
+  [0x45]: {
+    type: Type.String,
+    name: 'parseJson_map',
+    arguments: [],
+  },
+  [0x45]: {
+    type: Type.String,
+    name: 'parseJson_string',
     arguments: [],
   },
   [0x46]: {
     type: Type.String,
     name: 'parseXml',
-    arguments: [],
-  },
-  [0x47]: {
-    type: Type.String,
-    name: 'asBoolean',
     arguments: [],
   },
   [0x48]: {
@@ -403,214 +766,6 @@ export const operatorInfos: OperatorInfos = {
   [0x49]: {
     type: Type.String,
     name: 'toUpperCase',
-    arguments: [],
-  },
-
-  [0x50]: {
-    type: Type.Array,
-    name: 'asBytes',
-    arguments: [],
-  },
-  [0x51]: {
-    type: Type.Array,
-    name: 'count',
-    arguments: [],
-  },
-  [0x52]: {
-    type: Type.Array,
-    name: 'every',
-    arguments: [
-      {
-        name: 'function',
-        optional: false,
-        type: MirArgumentKind.Filter,
-      },
-    ],
-  },
-  [0x53]: {
-    type: Type.Array,
-    name: 'filter',
-    arguments: [
-      {
-        name: 'function',
-        optional: false,
-        type: MirArgumentKind.Filter,
-      },
-    ],
-  },
-  [0x54]: {
-    type: Type.Array,
-    name: 'flatten',
-    arguments: [
-      {
-        name: 'depth',
-        optional: true,
-        type: MirArgumentKind.Integer,
-      },
-    ],
-  },
-  [0x55]: {
-    type: Type.Array,
-    name: 'get',
-    arguments: [
-      {
-        name: 'index',
-        optional: false,
-        type: MirArgumentKind.Integer,
-      },
-    ],
-  },
-  [0x56]: {
-    type: Type.Array,
-    name: 'map',
-    arguments: [
-      {
-        name: 'operator',
-        optional: false,
-        type: MirArgumentKind.Mapper,
-      },
-    ],
-  },
-  [0x57]: {
-    type: Type.Array,
-    name: 'reduce',
-    arguments: [
-      {
-        name: 'function',
-        optional: false,
-        type: MirArgumentKind.Reducer,
-      },
-    ],
-  },
-  [0x58]: {
-    type: Type.Array,
-    name: 'some',
-    arguments: [
-      {
-        name: 'function',
-        optional: false,
-        type: MirArgumentKind.Filter,
-      },
-    ],
-  },
-  [0x59]: {
-    type: Type.Array,
-    name: 'sort',
-    arguments: [
-      {
-        name: 'mapFunction',
-        optional: false,
-        type: MirArgumentKind.Mapper,
-      },
-      {
-        name: 'ascending',
-        optional: false,
-        type: MirArgumentKind.Boolean,
-      },
-    ],
-  },
-  [0x5a]: {
-    type: Type.Array,
-    name: 'take',
-    arguments: [
-      {
-        name: 'min',
-        optional: true,
-        type: MirArgumentKind.Integer,
-      },
-      {
-        name: 'max',
-        optional: true,
-        type: MirArgumentKind.Integer,
-      },
-    ],
-  },
-  [0x60]: {
-    type: Type.Map,
-    name: 'entries',
-    arguments: [],
-  },
-  [0x61]: {
-    type: Type.Map,
-    name: 'get',
-    arguments: [
-      {
-        name: 'key',
-        optional: false,
-        type: MirArgumentKind.String,
-      },
-    ],
-  },
-  [0x62]: {
-    type: Type.Map,
-    name: 'keys',
-    arguments: [],
-  },
-  [0x63]: {
-    type: Type.Map,
-    name: 'values',
-    arguments: [],
-  },
-  [0x70]: {
-    type: Type.Bytes,
-    name: 'asArray',
-    arguments: [],
-  },
-  [0x71]: {
-    type: Type.Bytes,
-    name: 'asBoolean',
-    arguments: [],
-  },
-  [0x72]: {
-    type: Type.Bytes,
-    name: 'asFloat',
-    arguments: [],
-  },
-  [0x73]: {
-    type: Type.Bytes,
-    name: 'asInteger',
-    arguments: [
-      {
-        name: 'base',
-        optional: true,
-        type: MirArgumentKind.Integer,
-      },
-    ],
-  },
-  [0x74]: {
-    type: Type.Bytes,
-    name: 'asMap',
-    arguments: [],
-  },
-  [0x75]: {
-    type: Type.Bytes,
-    name: 'asString',
-    arguments: [],
-  },
-  [0x76]: {
-    type: Type.Bytes,
-    name: 'hash',
-    arguments: [],
-  },
-  [0x80]: {
-    type: Type.Result,
-    name: 'get',
-    arguments: [],
-  },
-  [0x81]: {
-    type: Type.Result,
-    name: 'getOr',
-    arguments: [
-      {
-        name: 'default',
-        optional: false,
-        type: MirArgumentKind.Inner,
-      },
-    ],
-  },
-  [0x82]: {
-    type: Type.Result,
-    name: 'isOk',
     arguments: [],
   },
 }
