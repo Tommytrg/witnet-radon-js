@@ -189,7 +189,7 @@ export class Radon {
         case MirArgumentKind.Map:
         case MirArgumentKind.String:
           return this.wrapResultInCache(
-            this.generateInputArgument(argument as string | number | boolean)
+            this.generateInputArgument(argumentInfo.name, argument as string | number | boolean)
           )
         case MirArgumentKind.Filter:
           return this.wrapResultInCache(
@@ -204,11 +204,11 @@ export class Radon {
     return operatorArguments
   }
 
-  public generateInputArgument(value: string | number | boolean): MarkupInput {
+  public generateInputArgument(label: string, value: string | number | boolean): MarkupInput {
     return {
       hierarchicalType: MarkupHierarchicalType.Argument,
       id: 0,
-      label: 'by',
+      label,
       markupType: MarkupType.Input,
       value,
     } as MarkupInput
@@ -245,7 +245,7 @@ export class Radon {
     const filter: Filter = filterArgument[0]
     const argument = filterArgument[1]
     const selectedArgument: CachedMarkupSelectedOption = {
-      arguments: [this.wrapResultInCache(this.generateInputArgument(argument))],
+      arguments: [this.wrapResultInCache(this.generateInputArgument('by', argument))],
       label: Filter[filter],
       hierarchicalType: MarkupHierarchicalType.SelectedOperatorOption,
       markupType: MarkupType.Option,

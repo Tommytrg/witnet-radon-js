@@ -11,7 +11,7 @@ import {
 import { operatorInfos } from '../src/structures'
 
 describe('Radon', () => {
-  it.only('generateMarkupScript', () => {
+  it('generateMarkupScript', () => {
     const { Radon } = require('../src/radon')
     const script: MirScript = [137, [102, 'bpi'], [102, 'VSD'], [101, 'rate_float']]
     
@@ -88,10 +88,10 @@ describe('Radon', () => {
       const { Radon } = require('../src/radon')
 
       const radonMarkup = new Radon()
-      const operator = [0x23, 10] as MirOperator
+      const operator = [0x65, 'key'] as MirOperator
 
-      const args = [10]
-      const operatorCode = 0x23 as OperatorCode
+      const args = ['key']
+      const operatorCode = 0x65 as OperatorCode
 
       const wrapResultInCache = (Radon.prototype.wrapResultInCache = jest.fn(() => ({
         id: 1,
@@ -138,7 +138,7 @@ describe('Radon', () => {
       const { Radon } = require('../src/radon')
 
       const radonMarkup = new Radon()
-      const operatorCode = 0x21 as OperatorCode
+      const operatorCode = 0x10 as OperatorCode
       const args: [] = []
       const operatorInfo = operatorInfos[operatorCode]
 
@@ -149,7 +149,7 @@ describe('Radon', () => {
       expect(result).toStrictEqual({
         arguments: [],
         hierarchicalType: 'selectedOperatorOption',
-        label: 'asBytes',
+        label: 'count',
         markupType: 'option',
         outputType: 'integer',
       })
@@ -159,11 +159,11 @@ describe('Radon', () => {
       const { Radon } = require('../src/radon')
 
       const radonMarkup = new Radon()
-      const operatorCode = 0x23 as OperatorCode
-      const args = [10]
+      const operatorCode = 0x12 as OperatorCode
+      const args = [0]
       const operatorInfo = operatorInfos[operatorCode]
 
-      const findOutputType = (Radon.prototype.findOutputType = jest.fn(() => OutputType.Integer))
+      const findOutputType = (Radon.prototype.findOutputType = jest.fn(() => OutputType.Inner))
 
       const argument = {
         id: 1,
@@ -179,9 +179,9 @@ describe('Radon', () => {
       expect(result).toStrictEqual({
         arguments: [{ id: 1 }],
         hierarchicalType: 'selectedOperatorOption',
-        label: 'asString',
+        label: 'flatten',
         markupType: 'option',
-        outputType: 'integer',
+        outputType: 'inner',
       })
     })
   })
@@ -409,7 +409,7 @@ describe('Radon', () => {
     const { Radon } = require('../src/radon')
     const value = 1
     const radonMarkup = new Radon()
-    const result = radonMarkup.generateInputArgument(value)
+    const result = radonMarkup.generateInputArgument('by', value)
 
     expect(result).toStrictEqual({
       hierarchicalType: MarkupHierarchicalType.Argument,
@@ -432,7 +432,7 @@ describe('Radon', () => {
 
     const result = radonMarkup.generateSelectedFilterArgument(filterArgs)
     expect(wrapResultInCache).toBeCalledWith('inputArgumentResult')
-    expect(generateInputArgument).toBeCalledWith(filterArgs[1])
+    expect(generateInputArgument).toBeCalledWith('by', filterArgs[1])
 
     expect(result).toStrictEqual({
       arguments: [{ id: 1 }],
