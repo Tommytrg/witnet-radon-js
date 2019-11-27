@@ -9,7 +9,7 @@ export declare function generateFilterArgumentOptions(): Array<MarkupOption>;
 export declare function generateReducerArgumentOptions(): Array<MarkupOption>;
 export declare function generateSelectedFilterArgument(filterArgument: FilterArgument): MarkupSelectedOption;
 export declare function generateSelectedReducerArgument(reducer: Reducer): MarkupSelectedOption;
-export declare function findOutputType(code: OperatorCode): OutputType | Array<OutputType>;
+export declare function findOutputType(code: OperatorCode): OutputType;
 export declare function getMirOperatorInfo(operator: MirOperator): {
     code: OperatorCode;
     args: Array<MirArgument> | null;

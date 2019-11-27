@@ -3,8 +3,8 @@ export declare class Radon {
     private cache;
     private cachedMarkup;
     constructor(mir?: Mir);
-    wrapResultInCache(result: Markup | CachedMarkupSelect | CachedMarkupSelectedOption | CachedArgument): CacheRef;
-    unwrapResultFromCache(ref: CacheRef): CachedMarkupSelectedOption | Markup | MarkupInput | CachedMarkupSelect;
+    wrapResultInCache(result: Markup | CachedMarkupSelect | CachedMarkupSelectedOption | CachedArgument | MarkupSelectedOption): CacheRef;
+    unwrapResultFromCache(ref: CacheRef): CachedMarkupSelectedOption | Markup | MarkupInput | CachedMarkupSelect | MarkupSelectedOption;
     mir2markup(mir: Mir): CachedMarkup;
     getMir(): Mir;
     getMarkup(): Markup;
@@ -22,7 +22,7 @@ export declare class Radon {
     unwrapOperator(operator: CachedMarkupOperator, id: number): MarkupOperator;
     unwrapSelectedOption(selectedOption: CacheRef): MarkupSelectedOption;
     unwrapArgument(arg: CacheRef): MarkupArgument;
-    findOutputType(code: OperatorCode): OutputType | Array<OutputType>;
+    findOutputType(code: OperatorCode): OutputType;
     getMirOperatorInfo(operator: MirOperator): {
         code: OperatorCode;
         args: Array<MirArgument> | null;

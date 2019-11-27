@@ -56,7 +56,7 @@ function generateMarkupOptions(operatorInfo, _code, _args) {
             label: x[0],
             markupType: types_1.MarkupType.Option,
             // TODO: Add support for Pseudotypes
-            outputType: x[1][1].length > 1 ? x[1][1] : x[1][1][0],
+            outputType: x[1][1],
         };
     });
     return markupOptions;
@@ -190,7 +190,7 @@ function findOutputType(code) {
     });
     var operatorEntry = Object.values(entry[1]).find(function (x) { return x[0] === code; });
     var outputType = operatorEntry[1];
-    return outputType.length > 1 ? outputType : outputType[0];
+    return outputType;
 }
 exports.findOutputType = findOutputType;
 function getMirOperatorInfo(operator) {

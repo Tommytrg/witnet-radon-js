@@ -1,4 +1,4 @@
-import { operatorInfos } from './structures'
+import { operatorInfos, typeSystem } from './structures'
 import {
   ArgumentInfo,
   ArrayOperatorName,

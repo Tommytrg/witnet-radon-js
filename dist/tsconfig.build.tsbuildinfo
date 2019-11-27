@@ -110,28 +110,28 @@
         "signature": "63b66918290d794f73832a6d0325be5026236674fe8c0cb0b68d162000d7bbe8"
       },
       "../src/types.ts": {
-        "version": "9e964dfe022dad4d904759dad3e59f25d87aa8d72390250b0eeea30531f01505",
-        "signature": "c30cdc5bf5a57d0d7fa7869c3c3ef04a7748e97158546be9747b6498ce6612d0"
+        "version": "9d048cb4c320e1ef408651a3ab224ec108560e39bb93cb744db2a343914090e2",
+        "signature": "af70d42b410af55a48e39c60d648837104e6ff2a7c2f486b6f83d41148a86d88"
       },
       "../src/utils.ts": {
         "version": "3c465eceb99ac2dc1ca2cd1347ea075569d623d7e986721403bf9c340144c870",
         "signature": "32bb44dc3734951e3c73f1cbeb75089e6babff57a80faa04bcf96b8fbb6a79c1"
       },
       "../src/structures.ts": {
-        "version": "6233c25e559c9ba28ce4e1015e9573db4341e477705ea2774f92fdddc3da5516",
+        "version": "601e80dd44bc45dbfc430d2834cba4e2e6e20ce97b7229c21956d83ce11e4d16",
         "signature": "a7fe26adc6b023f24bb772deb77884b1c1cde4ff56139f6363b1cc08133ed332"
       },
       "../src/markup2mir.ts": {
-        "version": "ee3105cdbca6d98f5fa0a20d10ce4ab1a29ef386af75a2da4c73322cb328effd",
+        "version": "4d13b1ea8a77747cb4cf52cec29f93a874d3eb4105d498a7a32b19e5d9e5aea7",
         "signature": "5fecc778b239e348362f645383ea1ff5ef497d21daa4969fb18905c8a9e0985b"
       },
       "../src/radon.ts": {
-        "version": "3bf86f4326ebbde5310ac3beb9dfb28d44a2a7557a5d625ca5a36b516a49bad6",
-        "signature": "b18584c8b77080fed3eb4141f563eff99a76b3c6624936571a7e9261d5e12c11"
+        "version": "86854d8c5336a6f77ce1495f848a38a69066ce7bb2ad77ac15e227cf298df919",
+        "signature": "3c5736a657247bc200a07547cb4e78a3d08bff77958d51e5997d049f3ef2fd2f"
       },
       "../src/mir2markup.ts": {
-        "version": "5151658730a241dc7bd302abea5c2d72c9bf4dfeaae11538072c59b9b707fffc",
-        "signature": "04d375bdd67189c9e35677be9b0c6172df66388322324a78bcf1113ffc019cd7"
+        "version": "fdec0a4ec1017adcf6fba57dc1a977ed011a0eebbc15836891288274ab7fd2a3",
+        "signature": "60b4412bc3fb672e32ab07a6da64c5afb3e6f27ba06a600ac7df69309f163457"
       },
       "../src/index.ts": {
         "version": "a319f2c2609e3720180109197433984f5039ce49d1597b7e438074886a9e12b5",
@@ -1271,6 +1271,9 @@
       "../src/markup2mir.ts": [
         "../src/types.ts"
       ],
+      "../src/radon.ts": [
+        "../src/types.ts"
+      ],
       "../src/mir2markup.ts": [
         "../src/types.ts"
       ],
@@ -1748,9 +1751,6 @@
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/radon.ts": [
-        "../src/types.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -1785,7 +1785,9 @@
       "../src/utils.ts",
       "../src/structures.ts",
       "../src/markup2mir.ts",
+      "../src/radon.ts",
       "../src/mir2markup.ts",
+      "../src/index.ts",
       "../node_modules/@babel/types/lib/index.d.ts",
       "../node_modules/@types/babel__generator/index.d.ts",
       "../node_modules/@types/babel__traverse/index.d.ts",
@@ -1846,9 +1848,7 @@
       "../node_modules/@types/node/ts3.2/index.d.ts",
       "../node_modules/@types/stack-utils/index.d.ts",
       "../node_modules/@types/yargs-parser/index.d.ts",
-      "../node_modules/@types/yargs/index.d.ts",
-      "../src/radon.ts",
-      "../src/index.ts"
+      "../node_modules/@types/yargs/index.d.ts"
     ]
   },
   "version": "3.6.4"

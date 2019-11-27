@@ -92,7 +92,7 @@ export function generateMarkupOptions(
         label: x[0],
         markupType: MarkupType.Option,
         // TODO: Add support for Pseudotypes
-        outputType: x[1][1].length > 1 ? x[1][1] : x[1][1][0],
+        outputType: x[1][1],
       }
     }
   )
@@ -234,15 +234,15 @@ export function generateSelectedReducerArgument(reducer: Reducer): MarkupSelecte
   return selectedArgument
 }
 
-export function findOutputType(code: OperatorCode): OutputType | Array<OutputType> {
+export function findOutputType(code: OperatorCode): OutputType {
   const entry: TypeSystemEntry = Object.entries(typeSystem).find(entry => {
     return Object.values(entry[1]).find(x => x[0] === code)
   }) as TypeSystemEntry
-  const operatorEntry: [OperatorCode, OutputType[]] = Object.values(entry[1]).find(
+  const operatorEntry: [OperatorCode, OutputType] = Object.values(entry[1]).find(
     x => x[0] === code
-  ) as [OperatorCode, OutputType[]]
-  const outputType: Array<OutputType> = operatorEntry[1] as Array<OutputType>
-  return outputType.length > 1 ? outputType : outputType[0]
+  ) as [OperatorCode, OutputType]
+  const outputType: OutputType = operatorEntry[1] as OutputType
+  return outputType
 }
 
 export function getMirOperatorInfo(

@@ -18,7 +18,7 @@ import {
 import { dummyHash } from './utils'
 
 export const typeSystem: TypeSystem = {
- [Type.Array]: {
+  [Type.Array]: {
     [ArrayOperatorName.Count]: [OperatorCode.ArrayCount, OutputType.Integer],
     [ArrayOperatorName.Filter]: [OperatorCode.ArrayFilter, OutputType.Array],
     [ArrayOperatorName.Flatten]: [OperatorCode.ArrayFlatten, OutputType.Array],
@@ -100,9 +100,15 @@ export const typeSystem: TypeSystem = {
     [StringOperatorName.Length]: [OperatorCode.StringLength, OutputType.Integer],
     [StringOperatorName.Match]: [OperatorCode.StringMatch, OutputType.MatchOutput],
     [StringOperatorName.ParseJsonArray]: [OperatorCode.StringParseJsonArray, OutputType.Array],
-    [StringOperatorName.ParseJsonBoolean]: [OperatorCode.StringParseJsonBoolean, OutputType.Boolean],
+    [StringOperatorName.ParseJsonBoolean]: [
+      OperatorCode.StringParseJsonBoolean,
+      OutputType.Boolean,
+    ],
     [StringOperatorName.ParseJsonFloat]: [OperatorCode.StringParseJsonFloat, OutputType.Float],
-    [StringOperatorName.ParseJsonInteger]: [OperatorCode.StringParseJsonInteger, OutputType.Integer],
+    [StringOperatorName.ParseJsonInteger]: [
+      OperatorCode.StringParseJsonInteger,
+      OutputType.Integer,
+    ],
     [StringOperatorName.ParseJsonMap]: [OperatorCode.StringParseJsonMap, OutputType.Map],
     [StringOperatorName.ParseJsonString]: [OperatorCode.StringParseJsonString, OutputType.String],
     [StringOperatorName.ParseXml]: [OperatorCode.StringParseXML, OutputType.Map],
@@ -133,7 +139,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Filter,
       },
     ],
-    outputType: OutputType.Same
+    outputType: OutputType.Same,
   },
   [OperatorCode.ArrayFlatten]: {
     type: Type.Array,
@@ -328,37 +334,37 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Inner,
       },
     ],
-    outputType: OutputType.MatchOutput
+    outputType: OutputType.MatchOutput,
   },
   [OperatorCode.BooleanNegate]: {
     type: Type.Boolean,
     name: 'negate',
     arguments: [],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.BytesAsString]: {
     type: Type.Bytes,
     name: 'asString',
     arguments: [],
-    outputType: OutputType.String
+    outputType: OutputType.String,
   },
   [OperatorCode.BytesHash]: {
     type: Type.Bytes,
     name: 'hash',
     arguments: [],
-    outputType: OutputType.Bytes
+    outputType: OutputType.Bytes,
   },
   [OperatorCode.IntegerAbsolute]: {
     type: Type.Integer,
     name: 'absolute',
     arguments: [],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.IntegerAsFloat]: {
     type: Type.Integer,
     name: 'asFloat',
     arguments: [],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.IntegerAsString]: {
     type: Type.Integer,
@@ -370,7 +376,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
-    outputType: OutputType.String
+    outputType: OutputType.String,
   },
   [OperatorCode.IntegerGreaterThan]: {
     type: Type.Integer,
@@ -394,7 +400,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.IntegerMatch]: {
     type: Type.Integer,
@@ -412,7 +418,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.IntegerMultiply]: {
     type: Type.Integer,
@@ -424,13 +430,13 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.IntegerNegate]: {
     type: Type.Integer,
     name: 'negate',
     arguments: [],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.IntegerPower]: {
     type: Type.Integer,
@@ -448,7 +454,7 @@ export const operatorInfos: OperatorInfos = {
     type: Type.Integer,
     name: 'reciprocal',
     arguments: [],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.IntegerSum]: {
     type: Type.Integer,
@@ -460,7 +466,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.FloatAbsolute]: {
     type: Type.Float,
@@ -478,7 +484,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
-    outputType: OutputType.String
+    outputType: OutputType.String,
   },
   [OperatorCode.FloatCeiling]: {
     type: Type.Float,
@@ -496,7 +502,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.FloatFloor]: {
     type: Type.Float,
@@ -514,7 +520,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.FloatModulo]: {
     type: Type.Float,
@@ -544,7 +550,7 @@ export const operatorInfos: OperatorInfos = {
     type: Type.Float,
     name: 'negate',
     arguments: [],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.FloatPower]: {
     type: Type.Float,
@@ -556,19 +562,19 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.FloatReciprocal]: {
     type: Type.Float,
     name: 'reciprocal',
     arguments: [],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.FloatRound]: {
     type: Type.Float,
     name: 'round',
     arguments: [],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.Floatsum]: {
     type: Type.Float,
@@ -580,19 +586,19 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.FloatTruncate]: {
     type: Type.Float,
     name: 'truncate',
     arguments: [],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.MapEntries]: {
     type: Type.Map,
     name: 'entries',
     arguments: [],
-    outputType: OutputType.Array
+    outputType: OutputType.Array,
   },
   [OperatorCode.MapGetArray]: {
     type: Type.Map,
@@ -604,7 +610,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
-    outputType: OutputType.Array
+    outputType: OutputType.Array,
   },
   [OperatorCode.MapGetBoolean]: {
     type: Type.Map,
@@ -616,7 +622,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.MapGetBytes]: {
     type: Type.Map,
@@ -628,7 +634,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
-    outputType: OutputType.Bytes
+    outputType: OutputType.Bytes,
   },
   [OperatorCode.MapGetInteger]: {
     type: Type.Map,
@@ -640,7 +646,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.MapGetFloat]: {
     type: Type.Map,
@@ -652,7 +658,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.MapGetMap]: {
     type: Type.Map,
@@ -664,7 +670,7 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
-    outputType: OutputType.Map
+    outputType: OutputType.Map,
   },
   [OperatorCode.MapGetString]: {
     type: Type.Map,
@@ -676,61 +682,61 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
-    outputType: OutputType.String
+    outputType: OutputType.String,
   },
   [OperatorCode.MapKeys]: {
     type: Type.Map,
     name: 'keys',
     arguments: [],
-    outputType: OutputType.ArrayString
+    outputType: OutputType.ArrayString,
   },
   [OperatorCode.MapValuesArray]: {
     type: Type.Map,
     name: 'values_array',
     arguments: [],
-    outputType: OutputType.ArrayArray
+    outputType: OutputType.ArrayArray,
   },
   [OperatorCode.MapValuesBoolean]: {
     type: Type.Map,
     name: 'values_boolean',
     arguments: [],
-    outputType: OutputType.ArrayBoolean
+    outputType: OutputType.ArrayBoolean,
   },
   [OperatorCode.MapValuesBytes]: {
     type: Type.Map,
     name: 'values_bytes',
     arguments: [],
-    outputType: OutputType.ArrayBytes
+    outputType: OutputType.ArrayBytes,
   },
   [OperatorCode.MapValuesInteger]: {
     type: Type.Map,
     name: 'values_integer',
     arguments: [],
-    outputType: OutputType.ArrayInteger
+    outputType: OutputType.ArrayInteger,
   },
   [OperatorCode.MapValuesFloat]: {
     type: Type.Map,
     name: 'values_float',
     arguments: [],
-    outputType: OutputType.ArrayFloat
+    outputType: OutputType.ArrayFloat,
   },
   [OperatorCode.MapValuesMap]: {
     type: Type.Map,
     name: 'values_map',
     arguments: [],
-    outputType: OutputType.ArrayMap
+    outputType: OutputType.ArrayMap,
   },
   [OperatorCode.MapValuesString]: {
     type: Type.Map,
     name: 'values_string',
     arguments: [],
-    outputType: OutputType.ArrayString
+    outputType: OutputType.ArrayString,
   },
   [OperatorCode.ResultGet]: {
     type: Type.Result,
     name: 'get',
     arguments: [],
-    outputType: OutputType.Inner
+    outputType: OutputType.Inner,
   },
   [OperatorCode.ResultGetOr]: {
     type: Type.Result,
@@ -742,61 +748,61 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Inner,
       },
     ],
-    outputType: OutputType.Inner
+    outputType: OutputType.Inner,
   },
   [OperatorCode.ResultIsOk]: {
     type: Type.Result,
     name: 'isOk',
     arguments: [],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.StringAsBoolean]: {
     type: Type.String,
     name: 'asBoolean',
     arguments: [],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.StringAsBytes]: {
     type: Type.String,
     name: 'asBytes',
     arguments: [],
-    outputType: OutputType.Bytes
+    outputType: OutputType.Bytes,
   },
   [OperatorCode.StringAsFloat]: {
     type: Type.String,
     name: 'asFloat',
     arguments: [],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.StringAsInteger]: {
     type: Type.String,
     name: 'asInteger',
     arguments: [],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.StringLength]: {
     type: Type.String,
     name: 'length',
     arguments: [],
-    outputType: OutputType.Integer
+    outputType: OutputType.Integer,
   },
   [OperatorCode.StringMatch]: {
     type: Type.String,
     name: 'match',
     arguments: [],
-    outputType: OutputType.MatchOutput
+    outputType: OutputType.MatchOutput,
   },
   [OperatorCode.StringParseJsonArray]: {
     type: Type.String,
     name: 'parseJson_array',
     arguments: [],
-    outputType: OutputType.Array
+    outputType: OutputType.Array,
   },
   [OperatorCode.StringParseJsonBoolean]: {
     type: Type.String,
     name: 'parseJson_boolean',
     arguments: [],
-    outputType: OutputType.Boolean
+    outputType: OutputType.Boolean,
   },
   [OperatorCode.StringParseJsonInteger]: {
     type: Type.String,
@@ -808,37 +814,37 @@ export const operatorInfos: OperatorInfos = {
     type: Type.String,
     name: 'parseJson_float',
     arguments: [],
-    outputType: OutputType.Float
+    outputType: OutputType.Float,
   },
   [OperatorCode.StringParseJsonMap]: {
     type: Type.String,
     name: 'parseJson_map',
     arguments: [],
-    outputType: OutputType.Map
+    outputType: OutputType.Map,
   },
   [OperatorCode.StringParseJsonString]: {
     type: Type.String,
     name: 'parseJson_string',
     arguments: [],
-    outputType: OutputType.String
+    outputType: OutputType.String,
   },
   [OperatorCode.StringParseXML]: {
     type: Type.String,
     name: 'parseXml',
     arguments: [],
-    outputType: OutputType.Map
+    outputType: OutputType.Map,
   },
   [OperatorCode.StringToLowerCase]: {
     type: Type.String,
     name: 'toLowerCase',
     arguments: [],
-    outputType: OutputType.String
+    outputType: OutputType.String,
   },
   [OperatorCode.StringToUpperCase]: {
     type: Type.String,
     name: 'toUpperCase',
     arguments: [],
-    outputType: OutputType.String
+    outputType: OutputType.String,
   },
 }
 

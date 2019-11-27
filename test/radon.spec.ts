@@ -11,9 +11,10 @@ import {
 import { operatorInfos } from '../src/structures'
 
 describe('Radon', () => {
-  it('generateMarkupScript', () => {
+  it.only('generateMarkupScript', () => {
     const { Radon } = require('../src/radon')
-    const script: MirScript = [69, 116, [97, 'bpi'], 116, [97, 'VSD'], 116, [97, 'rate_float'], 114]
+    const script: MirScript = [137, [102, 'bpi'], [102, 'VSD'], [101, 'rate_float']]
+    
     const radonMarkup = new Radon()
 
     const generateMarkupOperator = (Radon.prototype.generateMarkupOperator = jest
@@ -21,11 +22,7 @@ describe('Radon', () => {
       .mockReturnValueOnce(1)
       .mockReturnValueOnce(2)
       .mockReturnValueOnce(3)
-      .mockReturnValueOnce(4)
-      .mockReturnValueOnce(5)
-      .mockReturnValueOnce(6)
-      .mockReturnValueOnce(7)
-      .mockReturnValueOnce(8))
+      .mockReturnValueOnce(4))
     const wrapResultInCache = (Radon.prototype.wrapResultInCache = jest.fn())
     radonMarkup.generateMarkupScript(script)
 
@@ -33,19 +30,11 @@ describe('Radon', () => {
     expect(generateMarkupOperator).toHaveBeenNthCalledWith(2, script[1])
     expect(generateMarkupOperator).toHaveBeenNthCalledWith(3, script[2])
     expect(generateMarkupOperator).toHaveBeenNthCalledWith(4, script[3])
-    expect(generateMarkupOperator).toHaveBeenNthCalledWith(5, script[4])
-    expect(generateMarkupOperator).toHaveBeenNthCalledWith(6, script[5])
-    expect(generateMarkupOperator).toHaveBeenNthCalledWith(7, script[6])
-    expect(generateMarkupOperator).toHaveBeenNthCalledWith(8, script[7])
 
     expect(wrapResultInCache).toHaveBeenNthCalledWith(1, 1)
     expect(wrapResultInCache).toHaveBeenNthCalledWith(2, 2)
     expect(wrapResultInCache).toHaveBeenNthCalledWith(3, 3)
     expect(wrapResultInCache).toHaveBeenNthCalledWith(4, 4)
-    expect(wrapResultInCache).toHaveBeenNthCalledWith(5, 5)
-    expect(wrapResultInCache).toHaveBeenNthCalledWith(6, 6)
-    expect(wrapResultInCache).toHaveBeenNthCalledWith(7, 7)
-    expect(wrapResultInCache).toHaveBeenNthCalledWith(8, 8)
   })
 
   describe('expect generateMarkupOperator returns the correct markup operator', () => {
