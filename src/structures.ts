@@ -18,99 +18,112 @@ import {
 import { dummyHash } from './utils'
 
 export const typeSystem: TypeSystem = {
+ [Type.Array]: {
+    [ArrayOperatorName.Count]: [OperatorCode.ArrayCount, OutputType.Integer],
+    [ArrayOperatorName.Filter]: [OperatorCode.ArrayFilter, OutputType.Array],
+    [ArrayOperatorName.Flatten]: [OperatorCode.ArrayFlatten, OutputType.Array],
+    [ArrayOperatorName.GetArray]: [OperatorCode.ArrayGetArray, OutputType.Array],
+    [ArrayOperatorName.GetBoolean]: [OperatorCode.ArrayGetBoolean, OutputType.Boolean],
+    [ArrayOperatorName.GetBytes]: [OperatorCode.ArrayGetBytes, OutputType.Bytes],
+    [ArrayOperatorName.GetFloat]: [OperatorCode.ArrayGetFloat, OutputType.Float],
+    [ArrayOperatorName.GetInteger]: [OperatorCode.ArrayGetInteger, OutputType.Integer],
+    [ArrayOperatorName.GetMap]: [OperatorCode.ArrayGetMap, OutputType.Map],
+    [ArrayOperatorName.GetResult]: [OperatorCode.ArrayGetResult, OutputType.Result],
+    [ArrayOperatorName.GetString]: [OperatorCode.ArrayGetString, OutputType.String],
+    [ArrayOperatorName.Map]: [OperatorCode.ArrayMap, OutputType.ArrayMap],
+    [ArrayOperatorName.Reduce]: [OperatorCode.ArrayReduce, OutputType.ReducerOutput],
+    [ArrayOperatorName.Some]: [OperatorCode.ArraySome, OutputType.FilterOutput],
+    [ArrayOperatorName.Sort]: [OperatorCode.ArraySort, OutputType.Same],
+    [ArrayOperatorName.Take]: [OperatorCode.ArrayTake, OutputType.Array],
+  },
   [Type.Boolean]: {
-    [BooleanOperatorName.AsString]: [OperatorCode.BooleanAsString, [OutputType.String]],
-    [BooleanOperatorName.Match]: [OperatorCode.BooleanMatch, [OutputType.Argument]],
-    [BooleanOperatorName.Negate]: [OperatorCode.BooleanNegate, [OutputType.Boolean]],
-  },
-  [Type.Integer]: {
-    [IntegerOperatorName.Absolute]: [OperatorCode.IntegerAbsolute, [OutputType.Integer]],
-    [IntegerOperatorName.AsBytes]: [OperatorCode.IntegerAsBytes, [OutputType.Bytes]],
-    [IntegerOperatorName.AsFloat]: [OperatorCode.IntegerAsFloat, [OutputType.Float]],
-    [IntegerOperatorName.AsString]: [OperatorCode.IntegerAsString, [OutputType.String]],
-    [IntegerOperatorName.GreaterThan]: [OperatorCode.IntegerGreaterThan, [OutputType.Boolean]],
-    [IntegerOperatorName.LessThan]: [OperatorCode.IntegerLessThan, [OutputType.Boolean]],
-    [IntegerOperatorName.Match]: [OperatorCode.IntegerMatch, [OutputType.Argument]],
-    [IntegerOperatorName.Modulo]: [OperatorCode.IntegerModulo, [OutputType.Integer]],
-    [IntegerOperatorName.Multiply]: [OperatorCode.IntegerMultiply, [OutputType.Integer]],
-    [IntegerOperatorName.Negate]: [OperatorCode.IntegerNegate, [OutputType.Integer]],
-    [IntegerOperatorName.Power]: [OperatorCode.IntegerPower, [OutputType.Integer]],
-    [IntegerOperatorName.Reciprocal]: [OperatorCode.IntegerReciprocal, [OutputType.Float]],
-    [IntegerOperatorName.Sum]: [OperatorCode.IntegerSum, [OutputType.Integer]],
-  },
-  [Type.Float]: {
-    [FloatOperatorName.Absolute]: [OperatorCode.FloatAbsolute, [OutputType.Integer]],
-    [FloatOperatorName.AsBytes]: [OperatorCode.FloatAsBytes, [OutputType.Bytes]],
-    [FloatOperatorName.AsString]: [OperatorCode.FloatAsString, [OutputType.String]],
-    [FloatOperatorName.Ceiling]: [OperatorCode.FloatCeiling, [OutputType.Integer]],
-    [FloatOperatorName.GreaterThan]: [OperatorCode.FloatGraterThan, [OutputType.Boolean]],
-    [FloatOperatorName.Floor]: [OperatorCode.FloatFloor, [OutputType.Integer]],
-    [FloatOperatorName.LessThan]: [OperatorCode.FloatLessThan, [OutputType.Boolean]],
-    [FloatOperatorName.Modulo]: [OperatorCode.FloatModulo, [OutputType.Float]],
-    [FloatOperatorName.Multiply]: [OperatorCode.FloatMultiply, [OutputType.Float]],
-    [FloatOperatorName.Negate]: [OperatorCode.FloatNegate, [OutputType.Float]],
-    [FloatOperatorName.Power]: [OperatorCode.FloatPower, [OutputType.Float]],
-    [FloatOperatorName.Reciprocal]: [OperatorCode.FloatReciprocal, [OutputType.Float]],
-    [FloatOperatorName.Round]: [OperatorCode.FloatRound, [OutputType.Integer]],
-    [FloatOperatorName.Sum]: [OperatorCode.Floatsum, [OutputType.Float]],
-    [FloatOperatorName.Truncate]: [OperatorCode.FloatTruncate, [OutputType.Integer]],
-  },
-
-  [Type.String]: {
-    [StringOperatorName.AsBytes]: [OperatorCode.StringAsBytes, [OutputType.Bytes]],
-    [StringOperatorName.AsFloat]: [OperatorCode.StringAsFloat, [OutputType.Float]],
-    [StringOperatorName.AsInteger]: [OperatorCode.StringAsInteger, [OutputType.Integer]],
-    [StringOperatorName.Length]: [OperatorCode.StringLength, [OutputType.Integer]],
-    [StringOperatorName.Match]: [OperatorCode.StringMatch, [OutputType.Argument]],
-    [StringOperatorName.ParseJson]: [OperatorCode.StringParseJson, [OutputType.Bytes]],
-    [StringOperatorName.ParseXml]: [OperatorCode.StringParseXML, [OutputType.Map]],
-    [StringOperatorName.AsBoolean]: [OperatorCode.StringAsBoolean, [OutputType.Boolean]],
-    [StringOperatorName.ToLowerCase]: [OperatorCode.StringToLowerCase, [OutputType.String]],
-    [StringOperatorName.ToUpperCase]: [OperatorCode.StringToUpperCase, [OutputType.String]],
-  },
-
-  [Type.Array]: {
-    [ArrayOperatorName.AsBytes]: [OperatorCode.ArrayAsBytes, [OutputType.Bytes]],
-    [ArrayOperatorName.Count]: [OperatorCode.ArrayCount, [OutputType.Integer]],
-    [ArrayOperatorName.Every]: [OperatorCode.ArrayEvery, [OutputType.Boolean]],
-    [ArrayOperatorName.Filter]: [OperatorCode.ArrayFilter, [OutputType.Inner]],
-    [ArrayOperatorName.Flatten]: [OperatorCode.ArrayFlatten, [OutputType.Passthrough]],
-    [ArrayOperatorName.Get]: [OperatorCode.ArrayGet, [OutputType.Inner]],
-    [ArrayOperatorName.Map]: [OperatorCode.ArrayMap, [OutputType.Argument]],
-    [ArrayOperatorName.Reduce]: [OperatorCode.ArrayReduce, [OutputType.Inner]],
-    [ArrayOperatorName.Some]: [OperatorCode.ArraySome, [OutputType.Boolean]],
-    [ArrayOperatorName.Sort]: [OperatorCode.ArraySort, [OutputType.Inner]],
-    [ArrayOperatorName.Take]: [OperatorCode.ArrayTake, [OutputType.Inner]],
-  },
-  [Type.Map]: {
-    [MapOperatorName.Entries]: [OperatorCode.MapEntries, [OutputType.Bytes]],
-    [MapOperatorName.Get]: [OperatorCode.MapGet, [OutputType.Inner]],
-    [MapOperatorName.Keys]: [OperatorCode.MapKeys, [OutputType.String]],
-    [MapOperatorName.Values]: [OperatorCode.MapValues, [OutputType.Inner]],
+    [BooleanOperatorName.Match]: [OperatorCode.BooleanMatch, OutputType.MatchOutput],
+    [BooleanOperatorName.Negate]: [OperatorCode.BooleanNegate, OutputType.Boolean],
   },
   [Type.Bytes]: {
-    [BytesOperatorName.AsArray]: [OperatorCode.BytesAsArray, [OutputType.Bytes]],
-    [BytesOperatorName.AsBoolean]: [OperatorCode.BytesAsBoolean, [OutputType.Boolean]],
-    [BytesOperatorName.AsFloat]: [OperatorCode.BytesAsFloat, [OutputType.Float]],
-    [BytesOperatorName.AsInteger]: [OperatorCode.BytesAsInteger, [OutputType.Float]],
-    [BytesOperatorName.AsMap]: [OperatorCode.BytesAsMap, [OutputType.Map, OutputType.Bytes]],
-    [BytesOperatorName.AsString]: [OperatorCode.BytesAsString, [OutputType.String]],
-    [BytesOperatorName.Hash]: [OperatorCode.BytesHash, [OutputType.Bytes]],
+    [BytesOperatorName.AsString]: [OperatorCode.BytesAsString, OutputType.String],
+    [BytesOperatorName.Hash]: [OperatorCode.BytesHash, OutputType.Bytes],
+  },
+  [Type.Integer]: {
+    [IntegerOperatorName.Absolute]: [OperatorCode.IntegerAbsolute, OutputType.Integer],
+    [IntegerOperatorName.AsFloat]: [OperatorCode.IntegerAsFloat, OutputType.Float],
+    [IntegerOperatorName.AsString]: [OperatorCode.IntegerAsString, OutputType.String],
+    [IntegerOperatorName.GreaterThan]: [OperatorCode.IntegerGreaterThan, OutputType.Boolean],
+    [IntegerOperatorName.LessThan]: [OperatorCode.IntegerLessThan, OutputType.Boolean],
+    [IntegerOperatorName.Match]: [OperatorCode.IntegerMatch, OutputType.MatchOutput],
+    [IntegerOperatorName.Modulo]: [OperatorCode.IntegerModulo, OutputType.Integer],
+    [IntegerOperatorName.Multiply]: [OperatorCode.IntegerMultiply, OutputType.Integer],
+    [IntegerOperatorName.Negate]: [OperatorCode.IntegerNegate, OutputType.Integer],
+    [IntegerOperatorName.Power]: [OperatorCode.IntegerPower, OutputType.Integer],
+    [IntegerOperatorName.Reciprocal]: [OperatorCode.IntegerReciprocal, OutputType.Float],
+    [IntegerOperatorName.Sum]: [OperatorCode.IntegerSum, OutputType.Integer],
+  },
+  [Type.Float]: {
+    [FloatOperatorName.Absolute]: [OperatorCode.FloatAbsolute, OutputType.Float],
+    [FloatOperatorName.AsString]: [OperatorCode.FloatAsString, OutputType.String],
+    [FloatOperatorName.Ceiling]: [OperatorCode.FloatCeiling, OutputType.Integer],
+    [FloatOperatorName.GreaterThan]: [OperatorCode.FloatGraterThan, OutputType.Boolean],
+    [FloatOperatorName.Floor]: [OperatorCode.FloatFloor, OutputType.Integer],
+    [FloatOperatorName.LessThan]: [OperatorCode.FloatLessThan, OutputType.Boolean],
+    [FloatOperatorName.Modulo]: [OperatorCode.FloatModulo, OutputType.Float],
+    [FloatOperatorName.Multiply]: [OperatorCode.FloatMultiply, OutputType.Float],
+    [FloatOperatorName.Negate]: [OperatorCode.FloatNegate, OutputType.Float],
+    [FloatOperatorName.Power]: [OperatorCode.FloatPower, OutputType.Float],
+    [FloatOperatorName.Reciprocal]: [OperatorCode.FloatReciprocal, OutputType.Float],
+    [FloatOperatorName.Round]: [OperatorCode.FloatRound, OutputType.Integer],
+    [FloatOperatorName.Sum]: [OperatorCode.Floatsum, OutputType.Float],
+    [FloatOperatorName.Truncate]: [OperatorCode.FloatTruncate, OutputType.Integer],
+  },
+  [Type.Map]: {
+    [MapOperatorName.Entries]: [OperatorCode.MapEntries, OutputType.Bytes],
+    [MapOperatorName.GetArray]: [OperatorCode.MapGetArray, OutputType.Array],
+    [MapOperatorName.GetBoolean]: [OperatorCode.MapGetBoolean, OutputType.Boolean],
+    [MapOperatorName.GetBytes]: [OperatorCode.MapGetBytes, OutputType.Bytes],
+    [MapOperatorName.GetFloat]: [OperatorCode.MapGetFloat, OutputType.Float],
+    [MapOperatorName.GetInteger]: [OperatorCode.MapGetInteger, OutputType.Integer],
+    [MapOperatorName.GetMap]: [OperatorCode.MapGetMap, OutputType.Map],
+    [MapOperatorName.GetString]: [OperatorCode.MapGetString, OutputType.String],
+    [MapOperatorName.Keys]: [OperatorCode.MapKeys, OutputType.ArrayString],
+    [MapOperatorName.valuesArray]: [OperatorCode.MapValuesArray, OutputType.ArrayArray],
+    [MapOperatorName.valuesBoolean]: [OperatorCode.MapValuesBoolean, OutputType.ArrayBoolean],
+    [MapOperatorName.valuesBytes]: [OperatorCode.MapValuesBytes, OutputType.ArrayBytes],
+    [MapOperatorName.valuesFloat]: [OperatorCode.MapValuesFloat, OutputType.ArrayFloat],
+    [MapOperatorName.valuesInteger]: [OperatorCode.MapValuesInteger, OutputType.ArrayInteger],
+    [MapOperatorName.valuesMap]: [OperatorCode.MapValuesMap, OutputType.ArrayMap],
+    [MapOperatorName.valuesString]: [OperatorCode.MapValuesString, OutputType.ArrayString],
+  },
+  [Type.String]: {
+    [StringOperatorName.AsBoolean]: [OperatorCode.StringAsBoolean, OutputType.Boolean],
+    [StringOperatorName.AsBytes]: [OperatorCode.StringAsBytes, OutputType.Bytes],
+    [StringOperatorName.AsFloat]: [OperatorCode.StringAsFloat, OutputType.Float],
+    [StringOperatorName.AsInteger]: [OperatorCode.StringAsInteger, OutputType.Integer],
+    [StringOperatorName.Length]: [OperatorCode.StringLength, OutputType.Integer],
+    [StringOperatorName.Match]: [OperatorCode.StringMatch, OutputType.MatchOutput],
+    [StringOperatorName.ParseJsonArray]: [OperatorCode.StringParseJsonArray, OutputType.Array],
+    [StringOperatorName.ParseJsonBoolean]: [OperatorCode.StringParseJsonBoolean, OutputType.Boolean],
+    [StringOperatorName.ParseJsonFloat]: [OperatorCode.StringParseJsonFloat, OutputType.Float],
+    [StringOperatorName.ParseJsonInteger]: [OperatorCode.StringParseJsonInteger, OutputType.Integer],
+    [StringOperatorName.ParseJsonMap]: [OperatorCode.StringParseJsonMap, OutputType.Map],
+    [StringOperatorName.ParseJsonString]: [OperatorCode.StringParseJsonString, OutputType.String],
+    [StringOperatorName.ParseXml]: [OperatorCode.StringParseXML, OutputType.Map],
+    [StringOperatorName.ToLowerCase]: [OperatorCode.StringToLowerCase, OutputType.String],
+    [StringOperatorName.ToUpperCase]: [OperatorCode.StringToUpperCase, OutputType.String],
   },
   [Type.Result]: {
-    [ResultOperatorName.Get]: [OperatorCode.ResultGet, [OutputType.Inner]],
-    [ResultOperatorName.GetOr]: [OperatorCode.ResultGetOr, [OutputType.Inner]],
-    [ResultOperatorName.IsOk]: [OperatorCode.ResultIsOk, [OutputType.Boolean]],
+    [ResultOperatorName.Get]: [OperatorCode.ResultGet, OutputType.Inner],
+    [ResultOperatorName.GetOr]: [OperatorCode.ResultGetOr, OutputType.Inner],
+    [ResultOperatorName.IsOk]: [OperatorCode.ResultIsOk, OutputType.Boolean],
   },
 }
 
 export const operatorInfos: OperatorInfos = {
-  [16]: {
+  [OperatorCode.ArrayCount]: {
     type: Type.Array,
     name: 'count',
     arguments: [],
+    outputType: OutputType.Integer,
   },
-  [17]: {
+  [OperatorCode.ArrayFilter]: {
     type: Type.Array,
     name: 'filter',
     arguments: [
@@ -120,8 +133,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Filter,
       },
     ],
+    outputType: OutputType.Same
   },
-  [18]: {
+  [OperatorCode.ArrayFlatten]: {
     type: Type.Array,
     name: 'flatten',
     arguments: [
@@ -131,11 +145,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Inner,
   },
-  [19]: {
+  [OperatorCode.ArrayGetArray]: {
     type: Type.Array,
     name: 'get_array',
-    outputType: Type.Array,
     arguments: [
       {
         name: 'index',
@@ -143,11 +157,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Array,
   },
-  [20]: {
-    type: Type.Array,
+  [OperatorCode.ArrayGetBoolean]: {
+    type: Type.Boolean,
     name: 'get_boolean',
-    outputType: Type.Boolean,
     arguments: [
       {
         name: 'index',
@@ -155,11 +169,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Boolean,
   },
-  [21]: {
+  [OperatorCode.ArrayGetBytes]: {
     type: Type.Array,
     name: 'get_bytes',
-    outputType: Type.Bytes,
     arguments: [
       {
         name: 'index',
@@ -167,11 +181,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Bytes,
   },
-  [22]: {
+  [OperatorCode.ArrayGetInteger]: {
     type: Type.Array,
     name: 'get_integer',
-    outputType: Type.Integer,
     arguments: [
       {
         name: 'index',
@@ -179,11 +193,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Integer,
   },
-  [23]: {
+  [OperatorCode.ArrayGetFloat]: {
     type: Type.Array,
     name: 'get_float',
-    outputType: Type.Boolean,
     arguments: [
       {
         name: 'index',
@@ -191,11 +205,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Boolean,
   },
-  [24]: {
+  [OperatorCode.ArrayGetMap]: {
     type: Type.Array,
     name: 'get_map',
-    outputType: Type.Map,
     arguments: [
       {
         name: 'index',
@@ -203,11 +217,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Map,
   },
-  [25]: {
+  [OperatorCode.ArrayGetResult]: {
     type: Type.Array,
     name: 'get_result',
-    outputType: Type.Result,
     arguments: [
       {
         name: 'index',
@@ -215,11 +229,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Result,
   },
-  [26]: {
+  [OperatorCode.ArrayGetString]: {
     type: Type.Array,
     name: 'get_string',
-    outputType: Type.String,
     arguments: [
       {
         name: 'index',
@@ -227,23 +241,23 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.String,
   },
-  [27]: {
+  [OperatorCode.ArrayMap]: {
     type: Type.Array,
     name: 'map',
-    outputType: OutputType.SubscriptOutput,
     arguments: [
       {
-        name: 'operator',
+        name: 'script',
         optional: false,
         type: MirArgumentKind.Mapper,
       },
     ],
+    outputType: OutputType.SubscriptOutput,
   },
-  [28]: {
+  [OperatorCode.ArrayReduce]: {
     type: Type.Array,
     name: 'reduce',
-    outputType: OutputType.Inner,
     arguments: [
       {
         name: 'function',
@@ -251,11 +265,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Reducer,
       },
     ],
+    outputType: OutputType.Inner,
   },
-  [29]: {
+  [OperatorCode.ArraySome]: {
     type: Type.Array,
     name: 'some',
-    outputType: OutputType.Boolean,
     arguments: [
       {
         name: 'function',
@@ -263,11 +277,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Filter,
       },
     ],
+    outputType: OutputType.Boolean,
   },
-  [30]: {
+  [OperatorCode.ArraySort]: {
     type: Type.Array,
     name: 'sort',
-    outputType: OutputType.Same,
     arguments: [
       {
         name: 'mapFunction',
@@ -280,11 +294,11 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Boolean,
       },
     ],
+    outputType: OutputType.Same,
   },
-  [31]: {
+  [OperatorCode.ArrayTake]: {
     type: Type.Array,
     name: 'take',
-    outputType: OutputType.Same,
     arguments: [
       {
         name: 'min',
@@ -297,8 +311,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Same,
   },
-  [32]: {
+  [OperatorCode.BooleanMatch]: {
     type: Type.Boolean,
     name: 'match',
     arguments: [
@@ -313,33 +328,39 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Inner,
       },
     ],
+    outputType: OutputType.MatchOutput
   },
-  [33]: {
+  [OperatorCode.BooleanNegate]: {
     type: Type.Boolean,
     name: 'negate',
     arguments: [],
+    outputType: OutputType.Boolean
   },
-  [48]: {
+  [OperatorCode.BytesAsString]: {
     type: Type.Bytes,
     name: 'asString',
     arguments: [],
+    outputType: OutputType.String
   },
-  [49]: {
+  [OperatorCode.BytesHash]: {
     type: Type.Bytes,
     name: 'hash',
     arguments: [],
+    outputType: OutputType.Bytes
   },
-  [64]: {
+  [OperatorCode.IntegerAbsolute]: {
     type: Type.Integer,
     name: 'absolute',
     arguments: [],
+    outputType: OutputType.Integer
   },
-  [65]: {
+  [OperatorCode.IntegerAsFloat]: {
     type: Type.Integer,
     name: 'asFloat',
     arguments: [],
+    outputType: OutputType.Float
   },
-  [66]: {
+  [OperatorCode.IntegerAsString]: {
     type: Type.Integer,
     name: 'asString',
     arguments: [
@@ -349,8 +370,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.String
   },
-  [67]: {
+  [OperatorCode.IntegerGreaterThan]: {
     type: Type.Integer,
     name: 'greaterThan',
     arguments: [
@@ -360,8 +382,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Boolean,
   },
-  [68]: {
+  [OperatorCode.IntegerLessThan]: {
     type: Type.Integer,
     name: 'lessThan',
     arguments: [
@@ -371,13 +394,15 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Boolean
   },
-  [69]: {
+  [OperatorCode.IntegerMatch]: {
     type: Type.Integer,
     name: 'match',
     arguments: [],
+    outputType: OutputType.MatchOutput,
   },
-  [70]: {
+  [OperatorCode.IntegerModulo]: {
     type: Type.Integer,
     name: 'modulo',
     arguments: [
@@ -387,8 +412,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Integer
   },
-  [71]: {
+  [OperatorCode.IntegerMultiply]: {
     type: Type.Integer,
     name: 'multiply',
     arguments: [
@@ -398,13 +424,15 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Integer
   },
-  [72]: {
+  [OperatorCode.IntegerNegate]: {
     type: Type.Integer,
     name: 'negate',
     arguments: [],
+    outputType: OutputType.Integer
   },
-  [73]: {
+  [OperatorCode.IntegerPower]: {
     type: Type.Integer,
     name: 'power',
     arguments: [
@@ -414,13 +442,15 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Integer,
   },
-  [74]: {
+  [OperatorCode.IntegerReciprocal]: {
     type: Type.Integer,
     name: 'reciprocal',
     arguments: [],
+    outputType: OutputType.Float
   },
-  [75]: {
+  [OperatorCode.IntegerSum]: {
     type: Type.Integer,
     name: 'sum',
     arguments: [
@@ -430,13 +460,15 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Integer,
       },
     ],
+    outputType: OutputType.Integer
   },
-  [80]: {
+  [OperatorCode.FloatAbsolute]: {
     type: Type.Float,
     name: 'absolute',
     arguments: [],
+    outputType: OutputType.Float,
   },
-  [81]: {
+  [OperatorCode.FloatAsString]: {
     type: Type.Float,
     name: 'asString',
     arguments: [
@@ -446,13 +478,15 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
+    outputType: OutputType.String
   },
-  [82]: {
+  [OperatorCode.FloatCeiling]: {
     type: Type.Float,
     name: 'ceiling',
     arguments: [],
+    outputType: OutputType.Integer,
   },
-  [83]: {
+  [OperatorCode.FloatGraterThan]: {
     type: Type.Float,
     name: 'greaterThan',
     arguments: [
@@ -462,13 +496,15 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
+    outputType: OutputType.Boolean
   },
-  [84]: {
+  [OperatorCode.FloatFloor]: {
     type: Type.Float,
     name: 'floor',
     arguments: [],
+    outputType: OutputType.Float,
   },
-  [85]: {
+  [OperatorCode.FloatLessThan]: {
     type: Type.Float,
     name: 'lessThan',
     arguments: [
@@ -478,8 +514,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
+    outputType: OutputType.Boolean
   },
-  [86]: {
+  [OperatorCode.FloatModulo]: {
     type: Type.Float,
     name: 'modulo',
     arguments: [
@@ -489,8 +526,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
+    outputType: OutputType.Float,
   },
-  [87]: {
+  [OperatorCode.FloatMultiply]: {
     type: Type.Float,
     name: 'multiply',
     arguments: [
@@ -500,13 +538,15 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
+    outputType: OutputType.Float,
   },
-  [88]: {
+  [OperatorCode.FloatNegate]: {
     type: Type.Float,
     name: 'negate',
     arguments: [],
+    outputType: OutputType.Float
   },
-  [89]: {
+  [OperatorCode.FloatPower]: {
     type: Type.Float,
     name: 'power',
     arguments: [
@@ -516,18 +556,21 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
+    outputType: OutputType.Float
   },
-  [90]: {
+  [OperatorCode.FloatReciprocal]: {
     type: Type.Float,
     name: 'reciprocal',
     arguments: [],
+    outputType: OutputType.Float
   },
-  [91]: {
+  [OperatorCode.FloatRound]: {
     type: Type.Float,
     name: 'round',
     arguments: [],
+    outputType: OutputType.Integer
   },
-  [92]: {
+  [OperatorCode.Floatsum]: {
     type: Type.Float,
     name: 'sum',
     arguments: [
@@ -537,18 +580,21 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Float,
       },
     ],
+    outputType: OutputType.Float
   },
-  [93]: {
+  [OperatorCode.FloatTruncate]: {
     type: Type.Float,
     name: 'truncate',
     arguments: [],
+    outputType: OutputType.Integer
   },
-  [96]: {
+  [OperatorCode.MapEntries]: {
     type: Type.Map,
     name: 'entries',
     arguments: [],
+    outputType: OutputType.Array
   },
-  [97]: {
+  [OperatorCode.MapGetArray]: {
     type: Type.Map,
     name: 'get_array',
     arguments: [
@@ -558,8 +604,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
+    outputType: OutputType.Array
   },
-  [98]: {
+  [OperatorCode.MapGetBoolean]: {
     type: Type.Map,
     name: 'get_boolean',
     arguments: [
@@ -569,8 +616,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
+    outputType: OutputType.Boolean
   },
-  [99]: {
+  [OperatorCode.MapGetBytes]: {
     type: Type.Map,
     name: 'get_bytes',
     arguments: [
@@ -580,8 +628,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
+    outputType: OutputType.Bytes
   },
-  [100]: {
+  [OperatorCode.MapGetInteger]: {
     type: Type.Map,
     name: 'get_integer',
     arguments: [
@@ -591,8 +640,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
+    outputType: OutputType.Integer
   },
-  [101]: {
+  [OperatorCode.MapGetFloat]: {
     type: Type.Map,
     name: 'get_float',
     arguments: [
@@ -602,8 +652,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
+    outputType: OutputType.Float
   },
-  [102]: {
+  [OperatorCode.MapGetMap]: {
     type: Type.Map,
     name: 'get_map',
     arguments: [
@@ -613,8 +664,9 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
+    outputType: OutputType.Map
   },
-  [103]: {
+  [OperatorCode.MapGetString]: {
     type: Type.Map,
     name: 'get_string',
     arguments: [
@@ -624,55 +676,63 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.String,
       },
     ],
+    outputType: OutputType.String
   },
-  [104]: {
+  [OperatorCode.MapKeys]: {
     type: Type.Map,
     name: 'keys',
     arguments: [],
+    outputType: OutputType.ArrayString
   },
-  [105]: {
+  [OperatorCode.MapValuesArray]: {
     type: Type.Map,
     name: 'values_array',
     arguments: [],
+    outputType: OutputType.ArrayArray
   },
-  [106]: {
+  [OperatorCode.MapValuesBoolean]: {
     type: Type.Map,
     name: 'values_boolean',
     arguments: [],
+    outputType: OutputType.ArrayBoolean
   },
-  [107]: {
+  [OperatorCode.MapValuesBytes]: {
     type: Type.Map,
     name: 'values_bytes',
     arguments: [],
+    outputType: OutputType.ArrayBytes
   },
-  [108]: {
+  [OperatorCode.MapValuesInteger]: {
     type: Type.Map,
     name: 'values_integer',
     arguments: [],
+    outputType: OutputType.ArrayInteger
   },
-  [109]: {
+  [OperatorCode.MapValuesFloat]: {
     type: Type.Map,
     name: 'values_float',
     arguments: [],
+    outputType: OutputType.ArrayFloat
   },
-  [110]: {
+  [OperatorCode.MapValuesMap]: {
     type: Type.Map,
     name: 'values_map',
     arguments: [],
+    outputType: OutputType.ArrayMap
   },
-  [111]: {
+  [OperatorCode.MapValuesString]: {
     type: Type.Map,
     name: 'values_string',
     arguments: [],
+    outputType: OutputType.ArrayString
   },
-
-
-  [112]: {
+  [OperatorCode.ResultGet]: {
     type: Type.Result,
     name: 'get',
     arguments: [],
+    outputType: OutputType.Inner
   },
-  [113]: {
+  [OperatorCode.ResultGetOr]: {
     type: Type.Result,
     name: 'getOr',
     arguments: [
@@ -682,91 +742,103 @@ export const operatorInfos: OperatorInfos = {
         type: MirArgumentKind.Inner,
       },
     ],
+    outputType: OutputType.Inner
   },
-  [114]: {
+  [OperatorCode.ResultIsOk]: {
     type: Type.Result,
     name: 'isOk',
     arguments: [],
+    outputType: OutputType.Boolean
   },
-
-
-
-
-
-  [0x47]: {
+  [OperatorCode.StringAsBoolean]: {
     type: Type.String,
     name: 'asBoolean',
     arguments: [],
+    outputType: OutputType.Boolean
   },
-  [0x40]: {
+  [OperatorCode.StringAsBytes]: {
     type: Type.String,
     name: 'asBytes',
     arguments: [],
+    outputType: OutputType.Bytes
   },
-  [0x41]: {
+  [OperatorCode.StringAsFloat]: {
     type: Type.String,
     name: 'asFloat',
     arguments: [],
+    outputType: OutputType.Float
   },
-  [0x42]: {
+  [OperatorCode.StringAsInteger]: {
     type: Type.String,
     name: 'asInteger',
     arguments: [],
+    outputType: OutputType.Integer
   },
-  [0x43]: {
+  [OperatorCode.StringLength]: {
     type: Type.String,
     name: 'length',
     arguments: [],
+    outputType: OutputType.Integer
   },
-  [0x44]: {
+  [OperatorCode.StringMatch]: {
     type: Type.String,
     name: 'match',
     arguments: [],
- 
-  [0x45]: {
+    outputType: OutputType.MatchOutput
+  },
+  [OperatorCode.StringParseJsonArray]: {
     type: Type.String,
     name: 'parseJson_array',
     arguments: [],
+    outputType: OutputType.Array
   },
-  [0x45]: {
+  [OperatorCode.StringParseJsonBoolean]: {
     type: Type.String,
     name: 'parseJson_boolean',
     arguments: [],
+    outputType: OutputType.Boolean
   },
-  [0x45]: {
+  [OperatorCode.StringParseJsonInteger]: {
     type: Type.String,
     name: 'parseJson_integer',
     arguments: [],
+    outputType: OutputType.Integer,
   },
-  [0x45]: {
+  [OperatorCode.StringParseJsonFloat]: {
     type: Type.String,
     name: 'parseJson_float',
     arguments: [],
+    outputType: OutputType.Float
   },
-  [0x45]: {
+  [OperatorCode.StringParseJsonMap]: {
     type: Type.String,
     name: 'parseJson_map',
     arguments: [],
+    outputType: OutputType.Map
   },
-  [0x45]: {
+  [OperatorCode.StringParseJsonString]: {
     type: Type.String,
     name: 'parseJson_string',
     arguments: [],
+    outputType: OutputType.String
   },
-  [0x46]: {
+  [OperatorCode.StringParseXML]: {
     type: Type.String,
     name: 'parseXml',
     arguments: [],
+    outputType: OutputType.Map
   },
-  [0x48]: {
+  [OperatorCode.StringToLowerCase]: {
     type: Type.String,
     name: 'toLowerCase',
     arguments: [],
+    outputType: OutputType.String
   },
-  [0x49]: {
+  [OperatorCode.StringToUpperCase]: {
     type: Type.String,
     name: 'toUpperCase',
     arguments: [],
+    outputType: OutputType.String
   },
 }
 
