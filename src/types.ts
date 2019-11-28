@@ -51,9 +51,21 @@ export enum OutputType {
   Map = 'map',
   Bytes = 'bytes',
   Result = 'result',
+  SubscriptOutput = 'subscriptOutput',
+  ReducerOutput = 'reducerOutput',
+  FilterOutput = 'filterOutput',
+  MatchOutput = 'MatchOutput',
+  ArrayArray = 'ArrayArray',
+  ArrayBoolean = 'ArrayBoolean',
+  ArrayInteger = 'ArrayInteger',
+  ArrayFloat = 'ArrayFloat',
+  ArrayString = 'ArrayString',
+  ArrayMap = 'ArrayMap',
+  ArrayBytes = 'ArrayBytes',
+  ArrayResult = 'ArrayResult',
+
   Inner = 'inner',
-  Argument = 'argument',
-  Passthrough = 'passthrough',
+  Same = 'same',
 }
 
 export enum MarkupHierarchicalType {
@@ -62,8 +74,6 @@ export enum MarkupHierarchicalType {
   OperatorOption = 'operatorOption',
   Argument = 'argument',
 }
-
-export type ScriptCacheRef = CacheRef
 
 export type MarkupOption = {
   hierarchicalType: MarkupHierarchicalType.OperatorOption
@@ -88,7 +98,7 @@ export type MarkupInput = {
   hierarchicalType: MarkupHierarchicalType.Argument
   value: string | number | boolean
 }
-// TODO: unify markup select and markup selected option
+
 export type MarkupSelect = {
   id: number
   scriptId: number
@@ -108,7 +118,6 @@ export enum MarkupType {
 export type MarkupOperator = MarkupSelect
 export type MarkupArgument = MarkupSelect | MarkupInput
 export type MarkupSource = {
-  kind: string
   url: string
   script: MarkupScript
 }
@@ -116,7 +125,7 @@ export type MarkupSource = {
 export type MarkupScript = Array<MarkupOperator>
 
 export type MarkupRequest = {
-  timelock: number
+  notBefore: number
   retrieve: Array<MarkupSource>
   aggregate: MarkupScript
   tally: MarkupScript
@@ -129,79 +138,93 @@ export type Markup = {
 }
 
 export enum OperatorCode {
-  BooleanMatch = 0x10,
-  BooleanNegate = 0x11,
-  BooleanAsString = 0x12,
+  ArrayCount = 0x10,
+  ArrayFilter = 0x11,
+  ArrayFlatten = 0x12,
+  ArrayGetArray = 0x13,
+  ArrayGetBoolean = 0x14,
+  ArrayGetBytes = 0x15,
+  ArrayGetInteger = 0x16,
+  ArrayGetFloat = 0x17,
+  ArrayGetMap = 0x18,
+  ArrayGetResult = 0x19,
+  ArrayGetString = 0x1a,
+  ArrayMap = 0x1b,
+  ArrayReduce = 0x1c,
+  ArraySome = 0x1d,
+  ArraySort = 0x1e,
+  ArrayTake = 0x1f,
 
-  IntegerAbsolute = 0x20,
-  IntegerAsBytes = 0x21,
-  IntegerAsFloat = 0x22,
-  IntegerAsString = 0x23,
-  IntegerGreaterThan = 0x24,
-  IntegerLessThan = 0x25,
-  IntegerMatch = 0x26,
-  IntegerModulo = 0x27,
-  IntegerMultiply = 0x28,
-  IntegerNegate = 0x29,
-  IntegerPower = 0x2a,
-  IntegerReciprocal = 0x2b,
-  IntegerSum = 0x2c,
+  BooleanMatch = 0x20,
+  BooleanNegate = 0x21,
 
-  FloatAbsolute = 0x30,
-  FloatAsBytes = 0x31,
-  FloatAsString = 0x32,
-  FloatCeiling = 0x33,
-  FloatGraterThan = 0x34,
-  FloatFloor = 0x35,
-  FloatLessThan = 0x36,
-  FloatModulo = 0x37,
-  FloatMultiply = 0x38,
-  FloatNegate = 0x39,
-  FloatPower = 0x3a,
-  FloatReciprocal = 0x3b,
-  FloatRound = 0x3c,
-  Floatsum = 0x3d,
-  FloatTruncate = 0x3e,
+  BytesAsString = 0x30,
+  BytesHash = 0x31,
 
-  StringAsBytes = 0x40,
-  StringAsFloat = 0x41,
-  StringAsInteger = 0x42,
-  StringLength = 0x43,
-  StringMatch = 0x44,
-  StringParseJson = 0x45,
-  StringParseXML = 0x46,
-  StringAsBoolean = 0x47,
-  StringToLowerCase = 0x48,
-  StringToUpperCase = 0x49,
-
-  ArrayAsBytes = 0x50,
-  ArrayCount = 0x51,
-  ArrayEvery = 0x52,
-  ArrayFilter = 0x53,
-  ArrayFlatten = 0x54,
-  ArrayGet = 0x55,
-  ArrayMap = 0x56,
-  ArrayReduce = 0x57,
-  ArraySome = 0x58,
-  ArraySort = 0x59,
-  ArrayTake = 0x5a,
+  IntegerAbsolute = 0x40,
+  IntegerAsFloat = 0x41,
+  IntegerAsString = 0x42,
+  IntegerGreaterThan = 0x43,
+  IntegerLessThan = 0x44,
+  IntegerMatch = 0x45,
+  IntegerModulo = 0x46,
+  IntegerMultiply = 0x47,
+  IntegerNegate = 0x48,
+  IntegerPower = 0x49,
+  IntegerReciprocal = 0x4a,
+  IntegerSum = 0x4b,
+  
+  FloatAbsolute = 0x50,
+  FloatAsString = 0x51,
+  FloatCeiling = 0x52,
+  FloatGraterThan = 0x53,
+  FloatFloor = 0x54,
+  FloatLessThan = 0x55,
+  FloatModulo = 0x56,
+  FloatMultiply = 0x57,
+  FloatNegate = 0x58,
+  FloatPower = 0x59,
+  FloatReciprocal = 0x5a,
+  FloatRound = 0x5b,
+  Floatsum = 0x5c,
+  FloatTruncate = 0x5d,
 
   MapEntries = 0x60,
-  MapGet = 0x61,
-  MapKeys = 0x62,
-  MapValues = 0x63,
+  MapGetArray = 0x61,
+  MapGetBoolean = 0x62,
+  MapGetBytes = 0x63,
+  MapGetInteger = 0x64,
+  MapGetFloat = 0x65,
+  MapGetMap = 0x66,
+  MapGetString = 0x67,
+  MapKeys = 0x68,
+  MapValuesArray = 0x69,
+  MapValuesBoolean = 0x6a,
+  MapValuesBytes = 0x6b,
+  MapValuesInteger = 0x6c,
+  MapValuesFloat = 0x6d,
+  MapValuesMap = 0x6e,
+  MapValuesString = 0x6f,
 
-  BytesAsArray = 0x70,
-  BytesAsBoolean = 0x71,
-  BytesAsFloat = 0x72,
-  BytesAsInteger = 0x73,
-  BytesAsMap = 0x74,
-  BytesAsString = 0x75,
-  BytesHash = 0x76,
-
-  ResultGet = 0x80,
-  ResultGetOr = 0x81,
-  ResultIsOk = 0x82,
+  ResultGet = 0x70,
+  ResultGetOr = 0x71,
+  ResultIsOk = 0x72,
+  
+  StringAsBoolean = 0x80,
+  StringAsBytes = 0x81,
+  StringAsFloat = 0x82,
+  StringAsInteger = 0x83,
+  StringLength = 0x84,
+  StringMatch = 0x85,
+  StringParseJsonArray = 0x86,
+  StringParseJsonBoolean = 0x86,
+  StringParseJsonInteger = 0x87,
+  StringParseJsonFloat = 0x88,
+  StringParseJsonMap = 0x89,
+  StringParseJsonString = 0x8a,
+  StringParseXML = 0x8b,
+  StringToLowerCase = 0x8c,
+  StringToUpperCase = 0x8d,
 }
 
 export enum MirArgumentKind {
@@ -239,11 +262,10 @@ export type MirScript = Array<MirOperator>
 export type MirSource = {
   url: string
   script: MirScript
-  kind: string
 }
 
 export type MirRequest = {
-  timelock: number
+  notBefore: number
   retrieve: Array<MirSource>
   aggregate: MirScript
   tally: MirScript
@@ -260,6 +282,7 @@ export type GeneratedMarkupScript = {
   script: MarkupScript
 }
 export type OperatorInfo = {
+  outputType: OutputType
   type: Type
   name: string
   arguments: Array<ArgumentInfo>
@@ -271,66 +294,18 @@ export type OperatorInfos = {
   [T in OperatorCode]: OperatorInfo
 }
 
-export enum BooleanOperatorName {
-  Negate = 'negate',
-  Match = 'match',
-  AsString = 'asString',
-}
-
-export enum IntegerOperatorName {
-  Absolute = 'absolute',
-  Power = 'power',
-  Sum = 'sum',
-  AsBytes = 'asBytes',
-  AsFloat = 'asFloat',
-  AsString = 'asString',
-  GreaterThan = 'greaterThan',
-  LessThan = 'lessThan',
-  Match = 'match',
-  Modulo = 'modulo',
-  Multiply = 'multiply',
-  Negate = 'negate',
-  Reciprocal = 'reciprocal',
-}
-
-export enum FloatOperatorName {
-  Absolute = 'absolute',
-  AsBytes = 'asBytes',
-  AsString = 'asString',
-  Ceiling = 'ceiling',
-  GreaterThan = 'greaterThan',
-  LessThan = 'lessThan',
-  Floor = 'floor',
-  Modulo = 'modulo',
-  Multiply = 'multiply',
-  Negate = 'negate',
-  Power = 'power',
-  Sum = 'sum',
-  Truncate = 'truncate',
-  Reciprocal = 'reciprocal',
-  Round = 'round',
-}
-
-export enum StringOperatorName {
-  AsBytes = 'asBytes',
-  AsFloat = 'asFloat',
-  AsInteger = 'asInteger',
-  Length = 'length',
-  Match = 'match',
-  ParseJson = 'parseJson',
-  ParseXml = 'parseXml',
-  AsBoolean = 'asBoolean',
-  ToLowerCase = 'toLowerCase',
-  ToUpperCase = 'toUpperCase',
-}
-
 export enum ArrayOperatorName {
-  AsBytes = 'asBytes',
   Count = 'count',
-  Every = 'every',
   Filter = 'filter',
   Flatten = 'flatten',
-  Get = 'get',
+  GetArray = 'getArray',
+  GetBoolean = 'getBoolean',
+  GetBytes = 'getBytes',
+  GetInteger = 'getInteger',
+  GetFloat = 'getInteger',
+  GetMap = 'getInteger',
+  GetResult = 'getInteger',
+  GetString = 'getInteger',
   Map = 'map',
   Reduce = 'reduce',
   Some = 'some',
@@ -338,27 +313,89 @@ export enum ArrayOperatorName {
   Take = 'take',
 }
 
-export enum MapOperatorName {
-  Entries = 'entries',
-  Get = 'get',
-  Keys = 'keys',
-  Values = 'values',
+export enum BooleanOperatorName {
+  Negate = 'negate',
+  Match = 'match',
 }
 
 export enum BytesOperatorName {
-  AsArray = 'asArray',
-  AsBoolean = 'asBoolean',
-  AsFloat = 'asFloat',
-  AsInteger = 'asInteger',
-  AsMap = 'asMap',
   AsString = 'asString',
   Hash = 'hash',
+}
+
+export enum IntegerOperatorName {
+  Absolute = 'absolute',
+  AsFloat = 'asFloat',
+  AsString = 'asString',
+  GreaterThan = 'greaterThan',
+  LessThan = 'lessThan',
+  Match = 'match',
+  Modulo = 'modulo',
+  Multiply = 'multiply',
+  Negate = 'negate',
+  Power = 'power',
+  Reciprocal = 'reciprocal',
+  Sum = 'sum',
+}
+
+export enum FloatOperatorName {
+  Absolute = 'absolute',
+  AsString = 'asString',
+  Ceiling = 'ceiling',
+  GreaterThan = 'greaterThan',
+  Floor = 'floor',
+  LessThan = 'lessThan',
+  Modulo = 'modulo',
+  Multiply = 'multiply',
+  Negate = 'negate',
+  Power = 'power',
+  Reciprocal = 'reciprocal',
+  Round = 'round',
+  Sum = 'sum',
+  Truncate = 'truncate',
+}
+
+export enum MapOperatorName {
+  Entries = 'entries',
+  GetArray = 'GetArray',
+  GetBoolean = 'GetBoolean',
+  GetBytes = 'GetArray',
+  GetInteger = 'GetInteger',
+  GetFloat = 'GetFloat',
+  GetMap = 'GetMap',
+  GetString = 'GetString',
+  Keys = 'keys',
+  valuesArray = 'valuesArray',
+  valuesBoolean = 'valuesBoolean',
+  valuesBytes = 'valuesBytes',
+  valuesInteger = 'valuesInteger',
+  valuesFloat = 'valuesFloat',
+  valuesMap = 'valuesMap',
+  valuesString = 'valuesString',
 }
 
 export enum ResultOperatorName {
   Get = 'get',
   GetOr = 'getOr',
   IsOk = 'isOk',
+}
+
+export enum StringOperatorName {
+  AsBoolean = 'asBoolean',
+  AsBytes = 'asBytes',
+  AsFloat = 'asFloat',
+  AsInteger = 'asInteger',
+  Length = 'length',
+  Match = 'match',
+  ParseJsonArray = 'parseJsonArray',
+  ParseJsonBoolean = 'parseJsonBoolean',
+  ParseJsonInteger = 'parseJsonInteger',
+  ParseJsonFloat = 'parseJsonFloat',
+  ParseJsonMap = 'parseJsonMap',
+  ParseJsonString = 'parseJsonString',
+  ParseXml = 'parseXml',
+  ToLowerCase = 'toLowerCase',
+  ToUpperCase = 'toUpperCase',
 }
 
 export type OperatorName =
@@ -373,28 +410,28 @@ export type OperatorName =
 
 export type TypeSystem = {
   [Type.Boolean]: {
-    [B in BooleanOperatorName]: [OperatorCode, Array<OutputType>]
+    [B in BooleanOperatorName]: [OperatorCode, OutputType]
   }
   [Type.Integer]: {
-    [I in IntegerOperatorName]: [OperatorCode, Array<OutputType>]
+    [I in IntegerOperatorName]: [OperatorCode, OutputType]
   }
   [Type.Float]: {
-    [F in FloatOperatorName]: [OperatorCode, Array<OutputType>]
+    [F in FloatOperatorName]: [OperatorCode, OutputType]
   }
   [Type.String]: {
-    [S in StringOperatorName]: [OperatorCode, Array<OutputType>]
+    [S in StringOperatorName]: [OperatorCode, OutputType]
   }
   [Type.Array]: {
-    [A in ArrayOperatorName]: [OperatorCode, Array<OutputType>]
+    [A in ArrayOperatorName]: [OperatorCode, OutputType]
   }
   [Type.Map]: {
-    [M in MapOperatorName]: [OperatorCode, Array<OutputType>]
+    [M in MapOperatorName]: [OperatorCode, OutputType]
   }
   [Type.Bytes]: {
-    [B in BytesOperatorName]: [OperatorCode, Array<OutputType>]
+    [B in BytesOperatorName]: [OperatorCode, OutputType]
   }
   [Type.Result]: {
-    [R in ResultOperatorName]: [OperatorCode, Array<OutputType>]
+    [R in ResultOperatorName]: [OperatorCode, OutputType]
   }
 }
 
@@ -429,16 +466,15 @@ export type CachedMarkupOperator = CachedMarkupSelect
 export type CachedMarkupScript = Array<CacheRef>
 
 export type CachedMarkupRequest = {
-  timelock: number
+  notBefore: number
   retrieve: Array<CachedMarkupSource>
-  aggregate: ScriptCacheRef
-  tally: ScriptCacheRef
+  aggregate: CachedMarkupScript
+  tally: CachedMarkupScript
 }
 
 export type CachedMarkupSource = {
-  kind: string
   url: string
-  script: ScriptCacheRef
+  script: CachedMarkupScript
 }
 
 export type CachedMarkup = {
