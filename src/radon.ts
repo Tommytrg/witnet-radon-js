@@ -86,6 +86,7 @@ export class Radon {
     const radRequest: CachedMarkupRequest = {
       notBefore: mir.radRequest.notBefore,
       retrieve: mir.radRequest.retrieve.map((source: MirSource) => {
+        console.log('++++', source)
         let generatedMarkupScript: CachedMarkupScript = this.generateMarkupScript(source.script)
         return {
           url: source.url,
@@ -109,11 +110,14 @@ export class Radon {
   }
 
   public getMarkup(): Markup {
+    console.log('___<<<<', this.cachedMarkup.radRequest)
     const cachedRadRequest = this.cachedMarkup.radRequest
-
     const radRequest: MarkupRequest = {
       notBefore: cachedRadRequest.notBefore,
-      retrieve: cachedRadRequest.aggregate.map(source => this.unwrapSource(source)),
+      retrieve: cachedRadRequest.retrieve.map((source: CachedMarkupSource) => {
+        console.log('----', source)
+        return this.unwrapSource(source)
+      }),
       aggregate: this.unwrapScript(cachedRadRequest.aggregate),
       tally: this.unwrapScript(cachedRadRequest.tally),
     }
@@ -266,13 +270,10 @@ export class Radon {
   }
 
   // TODO: Remove unknown to have a stronger type
-  public unwrapSource(source: CacheRef): MarkupSource {
-    const cachedMarkupSource: CachedMarkupSource = (this.unwrapResultFromCache(
-      source
-    ) as unknown) as CachedMarkupSource
+  public unwrapSource(source: CachedMarkupSource): MarkupSource {
     const markupSource: MarkupSource = {
-      url: cachedMarkupSource.url,
-      script: this.unwrapScript(cachedMarkupSource.script),
+      url: source.url,
+      script: this.unwrapScript(source.script),
     }
 
     return markupSource
