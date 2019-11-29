@@ -54,15 +54,15 @@ export enum OutputType {
   SubscriptOutput = 'subscriptOutput',
   ReducerOutput = 'reducerOutput',
   FilterOutput = 'filterOutput',
-  MatchOutput = 'MatchOutput',
-  ArrayArray = 'ArrayArray',
-  ArrayBoolean = 'ArrayBoolean',
-  ArrayInteger = 'ArrayInteger',
-  ArrayFloat = 'ArrayFloat',
-  ArrayString = 'ArrayString',
-  ArrayMap = 'ArrayMap',
-  ArrayBytes = 'ArrayBytes',
-  ArrayResult = 'ArrayResult',
+  MatchOutput = 'matchOutput',
+  ArrayArray = 'arrayArray',
+  ArrayBoolean = 'arrayBoolean',
+  ArrayInteger = 'arrayInteger',
+  ArrayFloat = 'arrayFloat',
+  ArrayString = 'arrayString',
+  ArrayMap = 'arrayMap',
+  ArrayBytes = 'arrayBytes',
+  ArrayResult = 'arrayResult',
 
   Inner = 'inner',
   Same = 'same',
@@ -107,7 +107,7 @@ export type MarkupSelect = {
   outputType: Array<OutputType> | OutputType
   selected: MarkupSelectedOption
   options: Array<MarkupOption>
-  label?: string
+  label: string
 }
 
 export enum MarkupType {
@@ -118,6 +118,7 @@ export enum MarkupType {
 export type MarkupOperator = MarkupSelect
 export type MarkupArgument = MarkupSelect | MarkupInput
 export type MarkupSource = {
+  kind: string
   url: string
   script: MarkupScript
 }
@@ -173,7 +174,7 @@ export enum OperatorCode {
   IntegerPower = 0x49,
   IntegerReciprocal = 0x4a,
   IntegerSum = 0x4b,
-  
+
   FloatAbsolute = 0x50,
   FloatAsString = 0x51,
   FloatCeiling = 0x52,
@@ -209,7 +210,7 @@ export enum OperatorCode {
   ResultGet = 0x70,
   ResultGetOr = 0x71,
   ResultIsOk = 0x72,
-  
+
   StringAsBoolean = 0x80,
   StringAsBytes = 0x81,
   StringAsFloat = 0x82,
@@ -260,6 +261,7 @@ export type MirOperator =
 export type MirScript = Array<MirOperator>
 
 export type MirSource = {
+  kind: string
   url: string
   script: MirScript
 }
@@ -436,16 +438,16 @@ export type TypeSystem = {
 }
 
 export type TypeSystemEntry =
-  | [Type, { [B in BooleanOperatorName]: [OperatorCode, Array<OutputType>] }]
-  | [Type, { [I in IntegerOperatorName]: [OperatorCode, Array<OutputType>] }]
-  | [Type, { [F in FloatOperatorName]: [OperatorCode, Array<OutputType>] }]
-  | [Type, { [S in StringOperatorName]: [OperatorCode, Array<OutputType>] }]
-  | [Type, { [A in ArrayOperatorName]: [OperatorCode, Array<OutputType>] }]
-  | [Type, { [M in MapOperatorName]: [OperatorCode, Array<OutputType>] }]
-  | [Type, { [B in BytesOperatorName]: [OperatorCode, Array<OutputType>] }]
-  | [Type, { [R in ResultOperatorName]: [OperatorCode, Array<OutputType>] }]
+  | [Type, { [B in BooleanOperatorName]: [OperatorCode, OutputType] }]
+  | [Type, { [I in IntegerOperatorName]: [OperatorCode, OutputType] }]
+  | [Type, { [F in FloatOperatorName]: [OperatorCode, OutputType] }]
+  | [Type, { [S in StringOperatorName]: [OperatorCode, OutputType] }]
+  | [Type, { [A in ArrayOperatorName]: [OperatorCode, OutputType] }]
+  | [Type, { [M in MapOperatorName]: [OperatorCode, OutputType] }]
+  | [Type, { [B in BytesOperatorName]: [OperatorCode, OutputType] }]
+  | [Type, { [R in ResultOperatorName]: [OperatorCode, OutputType] }]
 
-export type TypeSystemValue = [string, [OperatorCode, Array<OutputType>]]
+export type TypeSystemValue = [string, [OperatorCode, OutputType]]
 
 export type FilterArgument = [Filter, number] | [Filter, string] | [Filter, boolean]
 
@@ -459,7 +461,6 @@ export type CachedMarkupSelect = {
   outputType: Array<OutputType> | OutputType
   selected: CacheRef
   options: Array<MarkupOption>
-  label?: string
 }
 
 export type CachedMarkupOperator = CachedMarkupSelect
@@ -473,6 +474,7 @@ export type CachedMarkupRequest = {
 }
 
 export type CachedMarkupSource = {
+  kind: string
   url: string
   script: CachedMarkupScript
 }
@@ -488,7 +490,7 @@ export type CachedMarkupSelectedOption = {
   hierarchicalType: MarkupHierarchicalType.SelectedOperatorOption
   label: string
   markupType: MarkupType.Option
-  outputType: OutputType | Array<OutputType>
+  outputType: OutputType
 }
 
 export type CachedArgument = MarkupInput | CachedMarkupSelect
