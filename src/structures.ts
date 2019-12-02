@@ -1031,7 +1031,7 @@ export const primitiveMarkupOptions = {
     return generateOption(OperatorCode[x[1][0]], x[1][1])
   }),
   matchOutput: null,
-  reducerOutput: null, 
+  reducerOutput: null,
   result: Object.entries(typeSystem.Result).map(x => {
     return generateOption(OperatorCode[x[1][0]], x[1][1])
   }),
@@ -1048,17 +1048,17 @@ export const primitiveMarkupOptions = {
 }
 
 export const markupOptions: { [key: string]: Array<any> | null } = {
-  all: removeRepeated([ 
-    ...primitiveMarkupOptions.array, 
-    ...primitiveMarkupOptions.arrayBoolean, 
-    ...primitiveMarkupOptions.arrayArray, 
-    ...primitiveMarkupOptions.arrayBytes, 
-    ...primitiveMarkupOptions.arrayFloat, 
-    ...primitiveMarkupOptions.arrayInteger, 
-    ...primitiveMarkupOptions.arrayMap, 
+  all: removeRepeated([
+    ...primitiveMarkupOptions.array,
+    ...primitiveMarkupOptions.arrayBoolean,
+    ...primitiveMarkupOptions.arrayArray,
+    ...primitiveMarkupOptions.arrayBytes,
+    ...primitiveMarkupOptions.arrayFloat,
+    ...primitiveMarkupOptions.arrayInteger,
+    ...primitiveMarkupOptions.arrayMap,
     ...primitiveMarkupOptions.arrayResult,
     ...primitiveMarkupOptions.arrayString,
-    ...primitiveMarkupOptions.boolean, 
+    ...primitiveMarkupOptions.boolean,
     ...primitiveMarkupOptions.bytes,
     ...primitiveMarkupOptions.filterOutput,
     ...primitiveMarkupOptions.float,

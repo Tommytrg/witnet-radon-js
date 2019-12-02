@@ -47,25 +47,23 @@ export class Radon {
   private cache: Cache<CachedMarkupSelectedOption | Markup | CachedArgument | MarkupSelectedOption>
   private lasType: OutputType = OutputType.Bytes
   private cachedMarkup: CachedMarkup = {
-      description: '',
-      name: '',
-      radRequest: {
-        notBefore: 0,
-        retrieve: [
-          {
-            kind: '',
-            script: [],
-            url: '',
-          },
-        ],
-        aggregate: [],
-        tally: [],
-      },
-    }
-  
+    description: '',
+    name: '',
+    radRequest: {
+      notBefore: 0,
+      retrieve: [
+        {
+          kind: '',
+          script: [],
+          url: '',
+        },
+      ],
+      aggregate: [],
+      tally: [],
+    },
+  }
+
   constructor(mir?: Mir) {
-
-
     this.cache = new Cache()
     this.cachedMarkup = mir ? this.mir2markup(mir) : this.cachedMarkup
   }
@@ -87,14 +85,14 @@ export class Radon {
 
   public mir2markup(mir: Mir): CachedMarkup {
     const retrieveScript = mir.radRequest.retrieve.map((source: MirSource) => {
-        let generatedMarkupScript: CachedMarkupScript = this.generateMarkupScript(source.script)
-        return {
-          kind: source.kind,
-          url: source.url,
-          script: generatedMarkupScript,
-        } as CachedMarkupSource
-      })
-    
+      let generatedMarkupScript: CachedMarkupScript = this.generateMarkupScript(source.script)
+      return {
+        kind: source.kind,
+        url: source.url,
+        script: generatedMarkupScript,
+      } as CachedMarkupSource
+    })
+
     const aggregateScript: CachedMarkupScript = this.generateMarkupScript(mir.radRequest.aggregate)
     const tallyScript: CachedMarkupScript = this.generateMarkupScript(mir.radRequest.tally)
     const radRequest: CachedMarkupRequest = {
@@ -141,7 +139,7 @@ export class Radon {
 
     return markupScript
   }
-  
+
   private generateMarkupOperator(operator: MirOperator): CachedMarkupOperator {
     const { code, args } = getMirOperatorInfo(operator)
     const operatorInfo: OperatorInfo = operatorInfos[code]
@@ -159,8 +157,8 @@ export class Radon {
       options,
     }
 
-    this.lasType = selected.outputType 
-    
+    this.lasType = selected.outputType
+
     return markupOperator
   }
 
