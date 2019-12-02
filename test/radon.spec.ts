@@ -1,13 +1,11 @@
 import { Radon } from '../src/radon'
-import { Mir, Markup } from 'src/types'
-import { markupOptions } from 'src/structures'
-
+import { Mir, Markup } from '../src/types'
+import { markupOptions } from '../src/structures'
 
 describe('Radon', () => {
   describe('getMarkup', () => {
     describe('operator types', () => {
-      it('array', () => {
-        const script = [0x10]
+      it.only('array', () => {
         const mirRequest: Mir = {
           description: '',
           name: '',
@@ -17,17 +15,20 @@ describe('Radon', () => {
               {
                 kind: '',
                 url: '',
-                script,
+                // bytesHash
+                script: [0x31],
               },
             ],
-            aggregate: script,
-            tally: script,
+            // arrayGetBytes
+            aggregate: [0x15],
+            // bytesAsString
+            tally: [0x30],
           },
         }
 
-        const markup = new Radon(mirRequest).getMarkup()
+        const result = new Radon(mirRequest).getMarkup()
 
-        const result: Markup = {
+        const markup: Markup = {
           description: '',
           name: '',
           radRequest: {
@@ -41,7 +42,7 @@ describe('Radon', () => {
                     id: 6,
                     label: 'count',
                     markupType: 'select',
-                    options: markupOptions.integer,
+                    options: markupOptions.bytes,
                     outputType: 'integer',
                     scriptId: 0,
                     selected: {
@@ -56,42 +57,43 @@ describe('Radon', () => {
                 url: '',
               },
             ],
+            aggregate: [
+              {
+                hierarchicalType: 'operator',
+                id: 4,
+                label: 'get_bytes',
+                markupType: 'select',
+                options: markupOptions.arrayBytes,
+                outputType: 'integer',
+                scriptId: 0,
+                selected: {
+                  arguments: [],
+                  hierarchicalType: 'selectedOperatorOption',
+                  label: 'count',
+                  markupType: 'option',
+                  outputType: 'integer',
+                },
+              },
+            ],
             tally: [
               {
                 hierarchicalType: 'operator',
                 id: 4,
-                label: 'count',
+                label: 'bytesAsString',
                 markupType: 'select',
                 options: markupOptions.integer,
-                outputType: 'integer',
+                outputType: 'string',
                 scriptId: 0,
                 selected: {
                   arguments: [],
                   hierarchicalType: 'selectedOperatorOption',
-                  label: 'count',
+                  label: 'bytesAsString',
                   markupType: 'option',
-                  outputType: 'integer',
+                  outputType: 'string',
                 },
               },
             ],
-            aggregate: [
-              {
-                hierarchicalType: 'operator',
-                id: 2,
-                label: 'count',
-                markupType: 'select',
-                options: markupOptions.integer,
-                outputType: 'integer',
-                scriptId: 0,
-                selected: {
-                  arguments: [],
-                  hierarchicalType: 'selectedOperatorOption',
-                  label: 'count',
-                  markupType: 'option',
-                  outputType: 'integer',
-                },
-              },
-            ],
+           
           },
         } as Markup
         expect(markup).toStrictEqual(result)
@@ -188,7 +190,7 @@ describe('Radon', () => {
         expect(markup).toStrictEqual(result)
       })
 
-      it.only('bytes', () => {
+      it('bytes', () => {
         const script = [0x30]
         const mirRequest: Mir = {
           description: '',
@@ -199,7 +201,7 @@ describe('Radon', () => {
               {
                 kind: '',
                 url: '',
-                script,
+                script: [0x31],
               },
             ],
             aggregate: script,
@@ -280,7 +282,6 @@ describe('Radon', () => {
       })
 
       it('string', () => {
-        // const script: MirScript = [69, 116, [97, 'bpi'], 116, [97, 'VSD'], 116, [97, 'rate_float'], 114]
 
         const mirRequest: Mir = {
           description: '',
@@ -291,12 +292,11 @@ describe('Radon', () => {
               {
                 kind: '',
                 url: '',
-                // script: [0x89, [0x66, 'bpi'], [0x66,'VSD'], [0x65, 'rate_float']]
                 script: [0x89],
               },
             ],
-            aggregate: [0x10],
-            tally: [0x10],
+            aggregate: [0x62],
+            tally: [0x21],
           },
         }
 
@@ -312,10 +312,10 @@ describe('Radon', () => {
                 script: [
                   {
                     hierarchicalType: 'operator',
-                    id: 6,
+                    id: 2,
                     label: 'parseJson_map',
                     markupType: 'select',
-                    options: markupOptions.map,
+                    options: markupOptions.bytes,
                     outputType: 'map',
                     scriptId: 0,
                     selected: {
@@ -330,39 +330,39 @@ describe('Radon', () => {
                 url: '',
               },
             ],
-            tally: [
-              {
-                hierarchicalType: 'operator',
-                id: 4,
-                label: 'count',
-                markupType: 'select',
-                options: markupOptions.integer,
-                outputType: 'integer',
-                scriptId: 0,
-                selected: {
-                  arguments: [],
-                  hierarchicalType: 'selectedOperatorOption',
-                  label: 'count',
-                  markupType: 'option',
-                  outputType: 'integer',
-                },
-              },
-            ],
             aggregate: [
               {
                 hierarchicalType: 'operator',
-                id: 2,
-                label: 'count',
+                id: 4,
+                label: 'get_boolean',
                 markupType: 'select',
-                options: markupOptions.integer,
-                outputType: 'integer',
+                options: markupOptions.map,
+                outputType: 'boolean',
                 scriptId: 0,
                 selected: {
                   arguments: [],
                   hierarchicalType: 'selectedOperatorOption',
-                  label: 'count',
+                  label: 'get_boolean',
                   markupType: 'option',
-                  outputType: 'integer',
+                  outputType: 'boolean',
+                },
+              },
+            ],
+            tally: [
+              {
+                hierarchicalType: 'operator',
+                id: 6,
+                label: 'negate',
+                markupType: 'select',
+                options: markupOptions.boolean,
+                outputType: 'boolean',
+                scriptId: 0,
+                selected: {
+                  arguments: [],
+                  hierarchicalType: 'selectedOperatorOption',
+                  label: 'negate',
+                  markupType: 'option',
+                  outputType: 'boolean',
                 },
               },
             ],

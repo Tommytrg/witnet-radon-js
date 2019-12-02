@@ -1,4 +1,4 @@
-import { TypeSystem, OperatorInfos, CacheRef } from './types';
+import { TypeSystem, OutputType, OperatorInfos, CacheRef } from './types';
 export declare const typeSystem: TypeSystem;
 export declare const operatorInfos: OperatorInfos;
 export declare class Cache<T> {
@@ -11,47 +11,113 @@ export declare class Cache<T> {
     set(id: number, item: T): void;
 }
 export declare const primitiveMarkupOptions: {
-    array: void[];
-    arrayBoolean: never[];
-    arrayArray: never[];
-    arrayBytes: never[];
-    arrayFloat: never[];
-    arrayInteger: never[];
-    arrayMap: never[];
-    arrayResult: never[];
-    arrayString: never[];
-    boolean: void[];
-    bytes: void[];
-    filterOutput: never[];
-    float: void[];
-    matchOutput: never[];
-    reducerOutput: never[];
-    result: void[];
-    string: void[];
-    subscriptOutput: never[];
-    map: void[];
-    integer: void[];
+    array: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayBoolean: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayArray: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayBytes: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayFloat: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayInteger: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayMap: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayResult: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    arrayString: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    boolean: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    bytes: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    filterOutput: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    float: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    matchOutput: null;
+    reducerOutput: null;
+    result: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    string: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    subscriptOutput: null;
+    map: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
+    integer: {
+        hierarchicalType: string;
+        label: string;
+        markupType: string;
+        outputType: OutputType;
+    }[];
 };
 export declare const markupOptions: {
-    array: void[];
-    arrayArray: never[];
-    arrayBoolean: never[];
-    arrayBytes: never[];
-    arrayFloat: never[];
-    arrayInteger: never[];
-    arrayMap: never[];
-    arrayResult: never[];
-    arrayString: never[];
-    boolean: void[];
-    bytes: void[];
-    filterOutput: never[];
-    float: void[];
-    integer: void[];
-    map: void[];
-    matchOutput: never[];
-    reducerOutput: never[];
-    result: void[];
-    string: void[];
-    subscriptOutput: never[];
+    [key: string]: Array<any> | null;
 };
 //# sourceMappingURL=structures.d.ts.map

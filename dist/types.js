@@ -1,5 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Stage;
+(function (Stage) {
+    Stage["Retrieve"] = "retrieve";
+    Stage["Aggregate"] = "aggregate";
+    Stage["Tally"] = "tally";
+})(Stage = exports.Stage || (exports.Stage = {}));
 var Type;
 (function (Type) {
     Type["Boolean"] = "Boolean";

@@ -110,12 +110,12 @@
         "signature": "0c9ea8c2028047f39a3f66752682604f543c08be8806258c3d95c93e75a43255"
       },
       "../src/types.ts": {
-        "version": "bd0808931a259658649de92a2ca53d3a198fa6c400ac35865736961f993b127e",
-        "signature": "4e34d868ff7702252a692bbf07c717fea919db5411386d766b41ed8be92f9bce"
+        "version": "a370ec74339e0169a235f4512dd2b1b5d5d673b9a0989cbd4335bbfd68710fd9",
+        "signature": "ffaa065eb0b5d8a413f3b544ba4e491f95f308eadc22d689c85ba117a5b90756"
       },
       "../src/structures.ts": {
-        "version": "6b16f14454352109ae72f1cc6f672c1de234d59cec3382ac776a38d96b0369df",
-        "signature": "9901cdd685182e833559acc77b0c74c597d71ecba354975169be575ef7de2b9d"
+        "version": "b7f82cced9c19319e7086e0d953f83d9f46d85cef7816209aa44eab67b8beda5",
+        "signature": "3c21dcd8e217b91eac6d5284ad80ae3bad3ec4c8e0420bde85a9354bba7a2cd5"
       },
       "../src/utils.ts": {
         "version": "acb129b2c116e1dd1beeedf7218a03039e092499358da49460c474365bd5a5cb",
@@ -126,8 +126,8 @@
         "signature": "5fecc778b239e348362f645383ea1ff5ef497d21daa4969fb18905c8a9e0985b"
       },
       "../src/radon.ts": {
-        "version": "5659ddbf2768b4a7fa1de8ab0aeb7d32eef210d9550127be66af805020c2f9a6",
-        "signature": "7118ab5b48d58f39f34aae3959d277a865a62c9ebc3244ff1fa361581f719eee"
+        "version": "34638c4b973ab0fca2030fce19863a8211391fcb75c07a7868a821445c1b3d93",
+        "signature": "d987e6ef84aaec370c97986d8394ec2d110411f15e1d3f6a4e77bd599e724247"
       },
       "../src/index.ts": {
         "version": "30f9f12e8a60ae3fb6032c11874a0e919a881ed8c90b99f7315ee98b09b13570",
@@ -1770,7 +1770,10 @@
       "../node_modules/typescript/lib/lib.es2018.regexp.d.ts",
       "../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../node_modules/typescript/lib/lib.esnext.bigint.d.ts",
+      "../src/types.ts",
+      "../src/structures.ts",
       "../src/utils.ts",
+      "../src/markup2mir.ts",
       "../src/mir2markup.ts",
       "../node_modules/@babel/types/lib/index.d.ts",
       "../node_modules/@types/babel__generator/index.d.ts",
@@ -1833,10 +1836,7 @@
       "../node_modules/@types/stack-utils/index.d.ts",
       "../node_modules/@types/yargs-parser/index.d.ts",
       "../node_modules/@types/yargs/index.d.ts",
-      "../src/types.ts",
       "../src/radon.ts",
-      "../src/markup2mir.ts",
-      "../src/structures.ts",
       "../src/index.ts"
     ]
   },

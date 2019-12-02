@@ -1,3 +1,8 @@
+export declare enum Stage {
+    Retrieve = "retrieve",
+    Aggregate = "aggregate",
+    Tally = "tally"
+}
 export declare enum Type {
     Boolean = "Boolean",
     Integer = "Integer",

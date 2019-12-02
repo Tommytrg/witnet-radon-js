@@ -1,6 +1,7 @@
 import { Markup, Mir, CachedMarkup } from './types';
 export declare class Radon {
     private cache;
+    private lasType;
     private cachedMarkup;
     constructor(mir?: Mir);
     private wrapResultInCache;

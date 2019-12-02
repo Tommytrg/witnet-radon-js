@@ -6,10 +6,10 @@ var structures_1 = require("./structures");
 var markup2mir_1 = require("./markup2mir");
 var filterArgumentOptions = generateFilterArgumentOptions();
 var reducerArgumentOptions = generateReducerArgumentOptions();
-// TODO: Create factory functions to remove code repetition
 var Radon = /** @class */ (function () {
     function Radon(mir) {
-        var defaultRequest = {
+        this.lasType = types_1.OutputType.Bytes;
+        this.cachedMarkup = {
             description: '',
             name: '',
             radRequest: {
@@ -26,7 +26,7 @@ var Radon = /** @class */ (function () {
             },
         };
         this.cache = new structures_1.Cache();
-        this.cachedMarkup = mir ? this.mir2markup(mir) : defaultRequest;
+        this.cachedMarkup = mir ? this.mir2markup(mir) : this.cachedMarkup;
     }
     Radon.prototype.wrapResultInCache = function (result) {
         return this.cache.insert(result);
@@ -36,19 +36,19 @@ var Radon = /** @class */ (function () {
     };
     Radon.prototype.mir2markup = function (mir) {
         var _this = this;
+        var retrieveScript = mir.radRequest.retrieve.map(function (source) {
+            var generatedMarkupScript = _this.generateMarkupScript(source.script);
+            return {
+                kind: source.kind,
+                url: source.url,
+                script: generatedMarkupScript,
+            };
+        });
         var aggregateScript = this.generateMarkupScript(mir.radRequest.aggregate);
         var tallyScript = this.generateMarkupScript(mir.radRequest.tally);
         var radRequest = {
             notBefore: mir.radRequest.notBefore,
-            retrieve: mir.radRequest.retrieve.map(function (source) {
-                console.log('++++', source);
-                var generatedMarkupScript = _this.generateMarkupScript(source.script);
-                return {
-                    kind: source.kind,
-                    url: source.url,
-                    script: generatedMarkupScript,
-                };
-            }),
+            retrieve: retrieveScript,
             aggregate: aggregateScript,
             tally: tallyScript,
         };
@@ -90,15 +90,18 @@ var Radon = /** @class */ (function () {
         var _a = getMirOperatorInfo(operator), code = _a.code, args = _a.args;
         var operatorInfo = structures_1.operatorInfos[code];
         var outputType = findOutputType(code);
+        var options = generateMarkupOptions(this.lasType);
+        var selected = this.generateSelectedOption(operatorInfo, code, args);
         var markupOperator = {
             id: 0,
             scriptId: 0,
             markupType: types_1.MarkupType.Select,
             hierarchicalType: types_1.MarkupHierarchicalType.Operator,
             outputType: outputType,
-            selected: this.wrapResultInCache(this.generateSelectedOption(operatorInfo, code, args)),
-            options: generateMarkupOptions(operatorInfo, code, args),
+            selected: this.wrapResultInCache(selected),
+            options: options,
         };
+        this.lasType = selected.outputType;
         return markupOperator;
     };
     Radon.prototype.generateSelectedOption = function (operatorInfo, code, args) {
@@ -108,7 +111,6 @@ var Radon = /** @class */ (function () {
             hierarchicalType: types_1.MarkupHierarchicalType.SelectedOperatorOption,
             label: operatorInfo.name,
             markupType: types_1.MarkupType.Option,
-            // TODO: Add support for pseudotypes
             outputType: outputType,
         };
         return markupSelectedOption;
@@ -118,7 +120,6 @@ var Radon = /** @class */ (function () {
         var operatorArguments = args.map(function (argument, index) {
             var argumentInfo = operatorInfo.arguments[index];
             switch (argumentInfo.type) {
-                // TODO: Add support for pseudotypes
                 case types_1.MirArgumentKind.Array:
                 case types_1.MirArgumentKind.Boolean:
                 case types_1.MirArgumentKind.Bytes:
@@ -192,7 +193,6 @@ var Radon = /** @class */ (function () {
         };
         return selectedArgument;
     };
-    // TODO: Remove unknown to have a stronger type
     Radon.prototype.unwrapSource = function (source) {
         var markupSource = {
             kind: source.kind,
@@ -287,17 +287,8 @@ function getMirOperatorInfo(operator) {
             args: null,
         };
 }
-function generateMarkupOptions(operatorInfo, _code, _args) {
-    var markupOptions = Object.entries(structures_1.typeSystem[operatorInfo.type]).map(function (x) {
-        return {
-            hierarchicalType: types_1.MarkupHierarchicalType.OperatorOption,
-            label: x[0],
-            markupType: types_1.MarkupType.Option,
-            // TODO: Add support for Pseudotypes
-            outputType: x[1][1],
-        };
-    });
-    return markupOptions;
+function generateMarkupOptions(type) {
+    return (structures_1.markupOptions[type] ? structures_1.markupOptions[type] : structures_1.markupOptions['all']);
 }
 // TODO: Call this function just at the beginning
 function generateFilterArgumentOptions() {

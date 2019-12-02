@@ -25,7 +25,7 @@ var types_1 = require("./types");
 exports.typeSystem = (_a = {},
     _a[types_1.Type.Array] = (_b = {},
         _b[types_1.ArrayOperatorName.Count] = [types_1.OperatorCode.ArrayCount, types_1.OutputType.Integer],
-        _b[types_1.ArrayOperatorName.Filter] = [types_1.OperatorCode.ArrayFilter, types_1.OutputType.Array],
+        _b[types_1.ArrayOperatorName.Filter] = [types_1.OperatorCode.ArrayFilter, types_1.OutputType.Same],
         _b[types_1.ArrayOperatorName.Flatten] = [types_1.OperatorCode.ArrayFlatten, types_1.OutputType.Array],
         _b[types_1.ArrayOperatorName.GetArray] = [types_1.OperatorCode.ArrayGetArray, types_1.OutputType.Array],
         _b[types_1.ArrayOperatorName.GetBoolean] = [types_1.OperatorCode.ArrayGetBoolean, types_1.OutputType.Boolean],
@@ -36,7 +36,7 @@ exports.typeSystem = (_a = {},
         _b[types_1.ArrayOperatorName.GetResult] = [types_1.OperatorCode.ArrayGetResult, types_1.OutputType.Result],
         _b[types_1.ArrayOperatorName.GetString] = [types_1.OperatorCode.ArrayGetString, types_1.OutputType.String],
         _b[types_1.ArrayOperatorName.Map] = [types_1.OperatorCode.ArrayMap, types_1.OutputType.ArrayMap],
-        _b[types_1.ArrayOperatorName.Reduce] = [types_1.OperatorCode.ArrayReduce, types_1.OutputType.ReducerOutput],
+        _b[types_1.ArrayOperatorName.Reduce] = [types_1.OperatorCode.ArrayReduce, types_1.OutputType.Inner],
         _b[types_1.ArrayOperatorName.Some] = [types_1.OperatorCode.ArraySome, types_1.OutputType.FilterOutput],
         _b[types_1.ArrayOperatorName.Sort] = [types_1.OperatorCode.ArraySort, types_1.OutputType.Same],
         _b[types_1.ArrayOperatorName.Take] = [types_1.OperatorCode.ArrayTake, types_1.OutputType.Array],
@@ -877,48 +877,171 @@ function generateOption(label, outputType) {
         hierarchicalType: 'operatorOption',
         label: label,
         markupType: 'option',
-        outputType: outputType
+        outputType: outputType,
     };
 }
 exports.primitiveMarkupOptions = {
     array: Object.entries(exports.typeSystem.Array).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[[1][0]], x[1][1]);
     }),
-    arrayBoolean: [],
-    arrayArray: [],
-    arrayBytes: [],
-    arrayFloat: [],
-    arrayInteger: [],
-    arrayMap: [],
-    arrayResult: [],
-    arrayString: [],
+    arrayBoolean: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayBoolean' },
+        { label: 'ArrayFlatten', outputType: 'arrayBoolean' },
+        { label: 'ArrayGetArray', outputType: 'arrayBoolean' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: 'boolean' },
+        { label: 'ArraySome', outputType: 'arrayBoolean' },
+        { label: 'ArraySort', outputType: 'arrayBoolean' },
+        { label: 'ArrayTake', outputType: 'arrayBoolean' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
+    arrayArray: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayArray' },
+        { label: 'ArrayFlatten', outputType: 'arrayArray' },
+        { label: 'ArrayGetArray', outputType: 'arrayArray' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: '' },
+        { label: 'ArraySome', outputType: 'arrayArray' },
+        { label: 'ArraySort', outputType: 'arrayArray' },
+        { label: 'ArrayTake', outputType: 'arrayArray' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
+    arrayBytes: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayBytes' },
+        { label: 'ArrayFlatten', outputType: 'arrayBytes' },
+        { label: 'ArrayGetArray', outputType: 'arrayBytes' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: 'bytes' },
+        { label: 'ArraySome', outputType: 'arrayBytes' },
+        { label: 'ArraySort', outputType: 'arrayBytes' },
+        { label: 'ArrayTake', outputType: 'arrayBytes' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
+    arrayFloat: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayFloat' },
+        { label: 'ArrayFlatten', outputType: 'arrayFloat' },
+        { label: 'ArrayGetArray', outputType: 'arrayFloat' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: 'float' },
+        { label: 'ArraySome', outputType: 'arrayFloat' },
+        { label: 'ArraySort', outputType: 'arrayFloat' },
+        { label: 'ArrayTake', outputType: 'arrayFloat' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
+    arrayInteger: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayInteger' },
+        { label: 'ArrayFlatten', outputType: 'arrayInteger' },
+        { label: 'ArrayGetArray', outputType: 'arrayInteger' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: 'integer' },
+        { label: 'ArraySome', outputType: 'arrayInteger' },
+        { label: 'ArraySort', outputType: 'arrayInteger' },
+        { label: 'ArrayTake', outputType: 'arrayInteger' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
+    arrayMap: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayMap' },
+        { label: 'ArrayFlatten', outputType: 'arrayMap' },
+        { label: 'ArrayGetArray', outputType: 'arrayMap' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: 'map' },
+        { label: 'ArraySome', outputType: 'arrayMap' },
+        { label: 'ArraySort', outputType: 'arrayMap' },
+        { label: 'ArrayTake', outputType: 'arrayMap' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
+    arrayResult: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayResult' },
+        { label: 'ArrayFlatten', outputType: 'arrayResult' },
+        { label: 'ArrayGetArray', outputType: 'arrayResult' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: 'result' },
+        { label: 'ArraySome', outputType: 'arrayResult' },
+        { label: 'ArraySort', outputType: 'arrayResult' },
+        { label: 'ArrayTake', outputType: 'arrayResult' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
+    arrayString: [
+        { label: 'ArrayCount', outputType: 'integer' },
+        { label: 'ArrayFilter', outputType: 'arrayString' },
+        { label: 'ArrayFlatten', outputType: 'arrayString' },
+        { label: 'ArrayGetArray', outputType: 'arrayString' },
+        { label: 'ArrayGetBoolean', outputType: 'boolean' },
+        { label: 'ArrayGetBytes', outputType: 'bytes' },
+        { label: 'ArrayGetString', outputType: 'string' },
+        { label: 'ArrayMap', outputType: 'arrayMap' },
+        { label: 'ArrayReduce', outputType: 'string' },
+        { label: 'ArraySome', outputType: 'arrayString' },
+        { label: 'ArraySort', outputType: 'arrayString' },
+        { label: 'ArrayTake', outputType: 'arrayString' },
+    ].map(function (x) {
+        return generateOption(x.label, x.outputType);
+    }),
     boolean: Object.entries(exports.typeSystem.Boolean).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[x[1][0]], x[1][1]);
     }),
     bytes: Object.entries(exports.typeSystem.Bytes).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[x[1][0]], x[1][1]);
     }),
-    filterOutput: [],
+    filterOutput: Object.entries(exports.typeSystem.Array).map(function (x) {
+        return generateOption(types_1.OperatorCode[[1][0]], x[1][1]);
+    }),
     float: Object.entries(exports.typeSystem.Float).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[x[1][0]], x[1][1]);
     }),
-    matchOutput: [],
-    reducerOutput: [],
+    matchOutput: null,
+    reducerOutput: null,
     result: Object.entries(exports.typeSystem.Result).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[x[1][0]], x[1][1]);
     }),
     string: Object.entries(exports.typeSystem.String).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[x[1][0]], x[1][1]);
     }),
-    subscriptOutput: [],
+    subscriptOutput: null,
     map: Object.entries(exports.typeSystem.Map).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[x[1][0]], x[1][1]);
     }),
     integer: Object.entries(exports.typeSystem.Integer).map(function (x) {
-        generateOption(x[1][0], x[1][1]);
+        return generateOption(types_1.OperatorCode[x[1][0]], x[1][1]);
     }),
 };
 exports.markupOptions = {
+    all: removeRepeated(__spread(exports.primitiveMarkupOptions.array, exports.primitiveMarkupOptions.arrayBoolean, exports.primitiveMarkupOptions.arrayArray, exports.primitiveMarkupOptions.arrayBytes, exports.primitiveMarkupOptions.arrayFloat, exports.primitiveMarkupOptions.arrayInteger, exports.primitiveMarkupOptions.arrayMap, exports.primitiveMarkupOptions.arrayResult, exports.primitiveMarkupOptions.arrayString, exports.primitiveMarkupOptions.boolean, exports.primitiveMarkupOptions.bytes, exports.primitiveMarkupOptions.filterOutput, exports.primitiveMarkupOptions.float, exports.primitiveMarkupOptions.result, exports.primitiveMarkupOptions.string, exports.primitiveMarkupOptions.map, exports.primitiveMarkupOptions.integer)),
     array: __spread(exports.primitiveMarkupOptions.array),
     arrayArray: __spread(exports.primitiveMarkupOptions.arrayArray),
     arrayBoolean: __spread(exports.primitiveMarkupOptions.arrayBoolean),
@@ -934,9 +1057,12 @@ exports.markupOptions = {
     float: __spread(exports.primitiveMarkupOptions.float, exports.primitiveMarkupOptions.string),
     integer: __spread(exports.primitiveMarkupOptions.integer, exports.primitiveMarkupOptions.float, exports.primitiveMarkupOptions.string),
     map: __spread(exports.primitiveMarkupOptions.map),
-    matchOutput: __spread(exports.primitiveMarkupOptions.matchOutput),
-    reducerOutput: __spread(exports.primitiveMarkupOptions.reducerOutput),
+    matchOutput: null,
+    reducerOutput: null,
     result: __spread(exports.primitiveMarkupOptions.result),
     string: __spread(exports.primitiveMarkupOptions.string),
-    subscriptOutput: __spread(exports.primitiveMarkupOptions.subscriptOutput),
+    subscriptOutput: null,
 };
+function removeRepeated(array) {
+    return array.filter(function (item, index, self) { return index === self.indexOf(item); });
+}

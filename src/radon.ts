@@ -13,7 +13,6 @@ import {
   OperatorCode,
   MirArgument,
   MarkupOption,
-  TypeSystemValue,
   MarkupSelectedOption,
   MarkupInput,
   MirArgumentKind,
@@ -38,19 +37,16 @@ import {
   CachedMarkupOperator,
 } from './types'
 
-import { Cache, operatorInfos, typeSystem } from './structures'
+import { Cache, operatorInfos, typeSystem, markupOptions } from './structures'
 import { markup2mir } from './markup2mir'
 
 const filterArgumentOptions = generateFilterArgumentOptions()
 const reducerArgumentOptions = generateReducerArgumentOptions()
 
-// TODO: Create factory functions to remove code repetition
 export class Radon {
   private cache: Cache<CachedMarkupSelectedOption | Markup | CachedArgument | MarkupSelectedOption>
-  private cachedMarkup: CachedMarkup
-
-  constructor(mir?: Mir) {
-    const defaultRequest = {
+  private lasType: OutputType = OutputType.Bytes
+  private cachedMarkup: CachedMarkup = {
       description: '',
       name: '',
       radRequest: {
@@ -66,9 +62,12 @@ export class Radon {
         tally: [],
       },
     }
+  
+  constructor(mir?: Mir) {
+
 
     this.cache = new Cache()
-    this.cachedMarkup = mir ? this.mir2markup(mir) : defaultRequest
+    this.cachedMarkup = mir ? this.mir2markup(mir) : this.cachedMarkup
   }
 
   private wrapResultInCache(
@@ -87,19 +86,20 @@ export class Radon {
   }
 
   public mir2markup(mir: Mir): CachedMarkup {
-    const aggregateScript: CachedMarkupScript = this.generateMarkupScript(mir.radRequest.aggregate)
-    const tallyScript: CachedMarkupScript = this.generateMarkupScript(mir.radRequest.tally)
-    const radRequest: CachedMarkupRequest = {
-      notBefore: mir.radRequest.notBefore,
-      retrieve: mir.radRequest.retrieve.map((source: MirSource) => {
-        console.log('++++', source)
+    const retrieveScript = mir.radRequest.retrieve.map((source: MirSource) => {
         let generatedMarkupScript: CachedMarkupScript = this.generateMarkupScript(source.script)
         return {
           kind: source.kind,
           url: source.url,
           script: generatedMarkupScript,
         } as CachedMarkupSource
-      }),
+      })
+    
+    const aggregateScript: CachedMarkupScript = this.generateMarkupScript(mir.radRequest.aggregate)
+    const tallyScript: CachedMarkupScript = this.generateMarkupScript(mir.radRequest.tally)
+    const radRequest: CachedMarkupRequest = {
+      notBefore: mir.radRequest.notBefore,
+      retrieve: retrieveScript,
       aggregate: aggregateScript,
       tally: tallyScript,
     }
@@ -141,11 +141,13 @@ export class Radon {
 
     return markupScript
   }
-
+  
   private generateMarkupOperator(operator: MirOperator): CachedMarkupOperator {
     const { code, args } = getMirOperatorInfo(operator)
     const operatorInfo: OperatorInfo = operatorInfos[code]
     const outputType = findOutputType(code)
+    const options = generateMarkupOptions(this.lasType)
+    const selected = this.generateSelectedOption(operatorInfo, code, args)
 
     const markupOperator: CachedMarkupSelect = {
       id: 0,
@@ -153,10 +155,12 @@ export class Radon {
       markupType: MarkupType.Select,
       hierarchicalType: MarkupHierarchicalType.Operator,
       outputType,
-      selected: this.wrapResultInCache(this.generateSelectedOption(operatorInfo, code, args)),
-      options: generateMarkupOptions(operatorInfo, code, args),
+      selected: this.wrapResultInCache(selected),
+      options,
     }
 
+    this.lasType = selected.outputType 
+    
     return markupOperator
   }
 
@@ -171,7 +175,6 @@ export class Radon {
       hierarchicalType: MarkupHierarchicalType.SelectedOperatorOption,
       label: operatorInfo.name,
       markupType: MarkupType.Option,
-      // TODO: Add support for pseudotypes
       outputType: outputType,
     }
 
@@ -185,7 +188,6 @@ export class Radon {
     const operatorArguments: Array<CacheRef> = args.map((argument: MirArgument, index: number) => {
       let argumentInfo = operatorInfo.arguments[index]
       switch (argumentInfo.type) {
-        // TODO: Add support for pseudotypes
         case MirArgumentKind.Array:
         case MirArgumentKind.Boolean:
         case MirArgumentKind.Bytes:
@@ -271,7 +273,6 @@ export class Radon {
     return selectedArgument
   }
 
-  // TODO: Remove unknown to have a stronger type
   private unwrapSource(source: CachedMarkupSource): MarkupSource {
     const markupSource: MarkupSource = {
       kind: source.kind,
@@ -281,6 +282,7 @@ export class Radon {
 
     return markupSource
   }
+
   private unwrapScript(script: Array<CacheRef>): MarkupScript {
     const markupScript: MarkupScript = script.map(operatorRef => {
       const cachedOperator: CachedMarkupOperator = (this.unwrapResultFromCache(
@@ -381,25 +383,10 @@ function getMirOperatorInfo(
       }
 }
 
-function generateMarkupOptions(
-  operatorInfo: OperatorInfo,
-  _code: OperatorCode,
-  _args: Array<MirArgument> | null
-): Array<MarkupOption> {
-  const markupOptions: Array<MarkupOption> = Object.entries(typeSystem[operatorInfo.type]).map(
-    (x: TypeSystemValue) => {
-      return {
-        hierarchicalType: MarkupHierarchicalType.OperatorOption,
-        label: x[0],
-        markupType: MarkupType.Option,
-        // TODO: Add support for Pseudotypes
-        outputType: x[1][1],
-      }
-    }
-  )
-
-  return markupOptions
+function generateMarkupOptions(type: OutputType): Array<MarkupOption> {
+  return (markupOptions[type] ? markupOptions[type] : markupOptions['all']) as Array<MarkupOption>
 }
+
 // TODO: Call this function just at the beginning
 function generateFilterArgumentOptions(): Array<MarkupOption> {
   const markupOptions: Array<MarkupOption> = getEnumNames(Filter).map(name => {
